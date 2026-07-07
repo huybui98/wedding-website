@@ -155,10 +155,12 @@ nav.scrolled{background:rgba(251,246,238,0.92);backdrop-filter:blur(8px);box-sha
 .nav-links a:hover{opacity:1;color:var(--wine);}
 .nav-toggle{display:none;background:none;font-size:24px;color:var(--wine-deep);}
 @media(max-width:860px){
-  .nav-links{position:fixed;top:0;right:-100%;height:100vh;width:76%;background:var(--ivory);flex-direction:column;justify-content:center;align-items:center;gap:30px;transition:right .4s ease;box-shadow:-8px 0 30px rgba(0,0,0,.08);}
+  .nav-links{position:fixed;top:0;right:-100%;height:100vh;width:76%;background:var(--ivory);flex-direction:column;justify-content:center;align-items:center;gap:30px;transition:right .4s ease;box-shadow:-8px 0 30px rgba(0,0,0,.08);z-index:950;}
   .nav-links.open{right:0;}
   .nav-toggle{display:block;}
+  .nav-close{display:block;position:absolute;top:24px;right:24px;font-size:28px;background:none;color:var(--wine-deep);padding:8px;cursor:pointer;}
 }
+.nav-close{display:none;}
 
 /* ===== hero ===== */
 .hero{
@@ -414,19 +416,19 @@ nav.scrolled{background:rgba(251,246,238,0.92);backdrop-filter:blur(8px);box-sha
   text-overflow:ellipsis;
   word-break:break-word;
 }
-.wish-card:hover::after{
+.wish-card.has-truncated:hover::after{
   content:attr(data-tooltip);
-  position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:12px;z-index:1000;
-  background:var(--wine-deep);color:var(--ivory);padding:12px 16px;
-  border-radius:10px;font-size:11px;box-shadow:0 12px 32px rgba(92,42,58,.3);
-  word-break:break-word;white-space:pre-wrap;max-width:300px;width:max-content;line-height:1.4;
-  animation:tooltip-fade .2s ease;pointer-events:none;display:block;
+  position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:8px;z-index:1000;
+  background:var(--wine-deep);color:var(--ivory);padding:10px 12px;
+  border-radius:8px;font-size:11px;box-shadow:0 8px 20px rgba(92,42,58,.35);
+  word-break:break-word;white-space:pre-wrap;max-width:280px;line-height:1.4;pointer-events:none;
+  animation:tooltip-fade .15s ease;
 }
-.wish-card:hover::before{
+.wish-card.has-truncated:hover::before{
   content:'';
-  position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:-6px;
-  width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;
-  border-top:6px solid var(--wine-deep);z-index:1001;
+  position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:-4px;
+  width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;
+  border-top:5px solid var(--wine-deep);z-index:1001;
 }
 @keyframes tooltip-fade{from{opacity:0;transform:translateX(-50%) translateY(-4px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
 .empty-state{text-align:center;padding:50px 20px;color:var(--ink-soft);}
@@ -1099,6 +1101,37 @@ document.getElementById('nav-toggle').addEventListener('click', ()=>{
 });
 function closeNav(){ document.getElementById('nav-links').classList.remove('open'); }
 
+// Mobile menu: add close button + click-outside handler
+const navLinks = document.getElementById('nav-links');
+const closeBtn = document.createElement('button');
+closeBtn.className = 'nav-close';
+closeBtn.innerHTML = '✕';
+closeBtn.onclick = closeNav;
+navLinks.prepend(closeBtn);
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('site-nav');
+  if (!nav.contains(e.target) && navLinks.classList.contains('open')) {
+    closeNav();
+  }
+});
+
+// Function to detect truncated text and enable tooltips
+function checkTruncatedWishes() {
+  document.querySelectorAll('.wish-card').forEach(card => {
+    const p = card.querySelector('p');
+    if (p) {
+      const isTruncated = p.scrollHeight > p.clientHeight;
+      const message = card.getAttribute('data-message');
+      if (isTruncated && message) {
+        card.classList.add('has-truncated');
+        card.setAttribute('data-tooltip', message);
+      }
+    }
+  });
+}
+
 /* =========================================================
    REVEAL ON SCROLL
    ========================================================= */
@@ -1108,6 +1141,9 @@ function initReveal(){
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold:.12 });
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  
+  // Check for truncated wishes
+  setTimeout(() => checkTruncatedWishes(), 100);
 }
 
 /* =========================================================
@@ -1498,13 +1534,16 @@ function renderWishesList(wishes){
     return;
   }
   el.innerHTML = `<div class="wishes-grid">` + wishes.map(w=>`
-    <div class="wish-card" data-tooltip="${escapeHtml(w.message)}">
+    <div class="wish-card" data-message="${escapeHtml(w.message)}">
       <span class="name">${escapeHtml(w.name)}</span>
       <span class="time">${tsToDate(w.updatedAt||w.createdAt).toLocaleString('vi-VN')}${w.updatedAt?' (đã sửa)':''}</span>
       <p>${escapeHtml(w.message)}</p>
       ${(anonUid && w.ownerUid===anonUid)?`<button class="btn btn-outline" style="margin-top:12px;padding:6px 16px;font-size:11px;" onclick="editWish('${w.id}')">Sửa lời chúc</button>`:''}
     </div>
   `).join('') + `</div>`;
+  
+  // Check for truncated wishes and enable tooltips
+  setTimeout(() => checkTruncatedWishes(), 0);
 }
 
 async function startWishesRealtime(){
