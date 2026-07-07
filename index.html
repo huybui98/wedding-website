@@ -402,7 +402,16 @@ nav.scrolled{background:rgba(251,246,238,0.92);backdrop-filter:blur(8px);box-sha
 .wish-card{background:var(--white);border-radius:18px;padding:24px;box-shadow:var(--shadow);border-left:3px solid var(--champagne);}
 .wish-card .name{font-family:var(--font-display);font-weight:600;color:var(--wine-deep);font-size:18px;}
 .wish-card .time{font-size:11px;color:var(--ink-soft);margin-bottom:10px;display:block;}
-.wish-card p{font-size:14px;margin:0;}
+.wish-card p{
+  font-size:14px;margin:0;
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  word-break:break-word;
+  cursor:help;
+}
 .empty-state{text-align:center;padding:50px 20px;color:var(--ink-soft);}
 .empty-state .icon{font-size:38px;margin-bottom:10px;}
 
@@ -1475,7 +1484,7 @@ function renderWishesList(wishes){
     <div class="wish-card">
       <span class="name">${escapeHtml(w.name)}</span>
       <span class="time">${tsToDate(w.updatedAt||w.createdAt).toLocaleString('vi-VN')}${w.updatedAt?' (đã sửa)':''}</span>
-      <p>${escapeHtml(w.message)}</p>
+      <p title="${escapeHtml(w.message)}">${escapeHtml(w.message)}</p>
       ${(anonUid && w.ownerUid===anonUid)?`<button class="btn btn-outline" style="margin-top:12px;padding:6px 16px;font-size:11px;" onclick="editWish('${w.id}')">Sửa lời chúc</button>`:''}
     </div>
   `).join('') + `</div>`;
