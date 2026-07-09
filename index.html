@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
 <title>Ngọc Huy & Quỳnh Hương — Hành trình yêu thương</title>
 
 <!-- =========================================================
@@ -81,7 +82,9 @@
   --font-display:'Special Elite', 'Courier New', monospace;
   --font-body:'Courier Prime', 'Courier New', monospace;
 }
-*{box-sizing:border-box;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+button, a, .chip, .cd-item, .g-item{-webkit-tap-highlight-color:transparent;}
+.btn:active, .chip:active, .game-opt:active, .player-btn:active, .music-toggle-fab:active{transform:scale(.96);}
 html{scroll-behavior:smooth;}
 body{
   margin:0;
@@ -118,9 +121,7 @@ img{max-width:100%;display:block;}
   transition:transform .25s cubic-bezier(.22,1,.36,1), background .25s ease, color .25s ease;
 }
 .btn-primary{background:var(--wine-deep);color:var(--white);border:2px solid var(--wine-deep);}
-.btn-primary:hover{background:var(--wine);border-color:var(--wine);transform:rotate(-1deg);}
 .btn-outline{background:transparent;border:1.5px dashed var(--champagne);color:var(--wine-deep);}
-.btn-outline:hover{background:var(--champagne-soft);color:var(--wine-deep);transform:rotate(1deg);}
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);}
 .reveal.in{opacity:1;transform:translateY(0);}
 .reveal-left{opacity:0;transform:translateX(-44px);transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);}
@@ -159,7 +160,6 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .logo-amp{color:var(--champagne);padding:0 3px;}
 .nav-links{display:flex;gap:28px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;}
 .nav-links a{opacity:.75;transition:opacity .2s;}
-.nav-links a:hover{opacity:1;color:var(--wine);}
 .nav-toggle{display:none;background:none;font-size:24px;color:var(--wine-deep);}
 .nav-close{display:none;}
 .nav-backdrop{display:none;}
@@ -356,14 +356,12 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   background:none;color:var(--wine-deep);font-size:17px;width:38px;height:38px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;transition:transform .18s ease, background .18s ease;
 }
-.player-btn:hover{background:var(--ivory-deep);transform:translateY(-1px);}
 .player-btn.ghost{color:var(--ink-soft);font-size:15px;}
 .player-btn.ghost.active{color:var(--champagne);}
 .player-btn.main{
   width:56px;height:56px;background:var(--wine-deep);color:var(--ivory);font-size:19px;
   box-shadow:0 10px 24px rgba(59,47,47,.32);
 }
-.player-btn.main:hover{background:var(--wine-deep);transform:translateY(-2px) scale(1.03);}
 @media(max-width:420px){
   .player-wrap{padding:30px 20px 26px;max-width:320px;}
   .player-controls{gap:10px;}
@@ -374,7 +372,6 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   border:2px solid var(--wine-deep);box-shadow:0 8px 22px rgba(0,0,0,.28);
   display:flex;align-items:center;justify-content:center;transition:transform .2s;
 }
-.music-toggle-fab:hover{transform:scale(1.06);}
 .music-toggle-fab.playing{animation:pulse-music 1.8s ease-in-out infinite;}
 .music-toggle-fab .icon{display:inline-block;transition:opacity .3s ease, filter .3s ease;}
 .music-toggle-fab.playing .icon{animation:spin-icon 6s linear infinite;}
@@ -452,7 +449,6 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .masonry{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;grid-auto-flow:dense;}
 .masonry .g-item{border-radius:4px;overflow:hidden;cursor:pointer;position:relative;background:var(--ivory-deep);}
 .masonry .g-item img{width:100%;height:100%;object-fit:cover;aspect-ratio:1/1;}
-.masonry .g-item:hover img{transform:scale(1.06);filter:sepia(0) contrast(1) brightness(1);}
 .masonry .g-item.tall{grid-row:span 2;}
 .masonry .g-item.tall img{aspect-ratio:1/2.05;}
 @media(max-width:860px){.masonry{grid-template-columns:repeat(2,1fr);}}
@@ -485,10 +481,8 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   padding:10px 18px;border-radius:3px;border:1.5px solid #D8C9A8;font-size:13px;background:var(--ivory);
   transition:all .2s cubic-bezier(.22,1,.36,1);cursor:pointer;user-select:none;
 }
-.chip:hover{border-color:var(--champagne);background:var(--champagne-soft);transform:translateY(-2px);box-shadow:0 4px 10px rgba(139,111,71,.25);}
 .chip input{display:none;}
 .chip.active{background:var(--wine-deep);color:var(--ivory);border-color:var(--wine-deep);}
-.chip.active:hover{background:var(--wine);border-color:var(--wine);transform:translateY(-2px);box-shadow:0 4px 10px rgba(139,58,58,.3);}
 .form-submit{width:100%;padding:16px;border-radius:4px;background:var(--wine-deep);color:var(--ivory);
   font-size:14px;letter-spacing:.1em;text-transform:uppercase;margin-top:8px;transition:opacity .2s;}
 .form-submit:disabled{opacity:.55;cursor:not-allowed;}
@@ -526,8 +520,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .game-card{max-width:640px;margin:0 auto;background:var(--white);border-radius:6px;padding:40px;box-shadow:var(--shadow);text-align:center;}
 .game-q{font-size:24px;margin-bottom:24px;}
 .game-opts{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
-.game-opt{padding:16px 30px;border-radius:4px;border:1.5px solid var(--champagne-soft);background:var(--ivory);font-size:15px;transition:all .2s;}
-.game-opt:hover{background:var(--champagne-soft);}
+.game-opt{padding:16px 30px;border-radius:4px;border:1.5px solid var(--champagne-soft);background:var(--ivory);font-size:15px;color:var(--ink);transition:all .2s;-webkit-tap-highlight-color:transparent;}
 .game-result{margin-top:22px;font-family:var(--font-display);font-size:20px;color:var(--wine);}
 .game-progress{margin-top:26px;font-size:12px;color:var(--ink-soft);letter-spacing:.1em;text-transform:uppercase;}
 
@@ -562,6 +555,20 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
   .reveal, .reveal-left, .reveal-right, .reveal-zoom{transition:none;opacity:1;transform:none;}
   html{scroll-behavior:auto;}
   .envelope-intro{display:none;}
+}
+
+/* Hover effects chỉ áp dụng cho thiết bị có con trỏ thật (chuột) — tránh bị 'dính' trạng thái hover sau khi chạm trên mobile */
+@media (hover: hover) and (pointer: fine){
+  .btn-primary:hover{background:var(--wine);border-color:var(--wine);transform:rotate(-1deg);}
+  .btn-outline:hover{background:var(--champagne-soft);color:var(--wine-deep);transform:rotate(1deg);}
+  .nav-links a:hover{opacity:1;color:var(--wine);}
+  .player-btn:hover{background:var(--ivory-deep);transform:translateY(-1px);}
+  .player-btn.main:hover{background:var(--wine-deep);transform:translateY(-2px) scale(1.03);}
+  .music-toggle-fab:hover{transform:scale(1.06);}
+  .masonry .g-item:hover img{transform:scale(1.06);filter:sepia(0) contrast(1) brightness(1);}
+  .chip:hover{border-color:var(--champagne);background:var(--champagne-soft);transform:translateY(-2px);box-shadow:0 4px 10px rgba(139,111,71,.25);}
+  .chip.active:hover{background:var(--wine);border-color:var(--wine);transform:translateY(-2px);box-shadow:0 4px 10px rgba(139,58,58,.3);}
+  .game-opt:hover{background:var(--champagne-soft);}
 }
 </style>
 </head>
@@ -698,11 +705,21 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
       </div>
 
       <div class="player-controls">
-        <button class="player-btn ghost" id="music-shuffle-btn" onclick="toggleShuffle()" title="Trộn bài" aria-label="Trộn bài">⤨</button>
-        <button class="player-btn" onclick="prevTrack()" title="Bài trước" aria-label="Bài trước">⏮</button>
-        <button class="player-btn main" id="music-play-btn" onclick="toggleMusic()" title="Phát/Tạm dừng" aria-label="Phát/Tạm dừng">▶</button>
-        <button class="player-btn" onclick="nextTrack()" title="Bài tiếp" aria-label="Bài tiếp">⏭</button>
-        <button class="player-btn ghost active" id="music-repeat-btn" onclick="toggleRepeat()" title="Lặp lại" aria-label="Lặp lại">⟳</button>
+        <button class="player-btn ghost" id="music-shuffle-btn" onclick="toggleShuffle()" title="Trộn bài" aria-label="Trộn bài">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+        </button>
+        <button class="player-btn" onclick="prevTrack()" title="Bài trước" aria-label="Bài trước">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><rect x="5" y="4" width="2.4" height="16"/></svg>
+        </button>
+        <button class="player-btn main" id="music-play-btn" onclick="toggleMusic()" title="Phát/Tạm dừng" aria-label="Phát/Tạm dừng">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+        <button class="player-btn" onclick="nextTrack()" title="Bài tiếp" aria-label="Bài tiếp">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><rect x="16.6" y="4" width="2.4" height="16"/></svg>
+        </button>
+        <button class="player-btn ghost active" id="music-repeat-btn" onclick="toggleRepeat()" title="Lặp lại" aria-label="Lặp lại">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -831,11 +848,11 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
       <p class="section-sub">Sự có mặt của bạn là niềm hạnh phúc lớn nhất. Nếu muốn gửi chút lòng thành, chúng mình xin trân trọng đón nhận.</p>
     </div>
     <div class="gift-card reveal">
-      <h3 id="gift-bank-name">Vietcombank</h3>
+      <h3 id="gift-bank-name">TPBank (Tiên Phong Bank)</h3>
       <div class="qr-box">VietQR</div>
-      <p style="font-size:13px;">Chủ tài khoản: <b id="gift-owner">Nguyễn Ngọc Huy</b></p>
+      <p style="font-size:13px;">Chủ tài khoản: <b id="gift-owner">Bùi Ngọc Huy</b></p>
       <div class="acc-row">
-        <span id="gift-account">0123 456 789</span>
+        <span id="gift-account">0442 0335 001</span>
         <button onclick="copyAccount()">Sao chép</button>
       </div>
     </div>
@@ -987,7 +1004,7 @@ const weddingConfig = {
     "https://ik.imagekit.io/tziiyziat/first_date.webp",
     "https://ik.imagekit.io/tziiyziat/first_meet.webp"
   ],
-  bank: { bankName: "Vietcombank", accountOwner: "Nguyễn Ngọc Huy", accountNumber: "0123456789", giftEnabled: true },
+  bank: { bankName: "TPBank (Tiên Phong Bank)", accountOwner: "Bùi Ngọc Huy", accountNumber: "0442 0335 001", giftEnabled: true },
   game: [
     { q: "Ai tỏ tình trước?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Là Ngọc Huy — tay run, giọng lạc cả tông! 😂" },
     { q: "Ai nói nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Chắc chắn là Quỳnh Hương, Ngọc Huy chỉ biết gật đầu 😅" },
@@ -1383,8 +1400,10 @@ function initMusic(){
   document.addEventListener('click', tryAutoStart, { once:true });
   document.addEventListener('touchstart', tryAutoStart, { once:true });
 }
+const ICON_PLAY = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+const ICON_PAUSE = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4.2" height="16" rx="1"/><rect x="14" y="4" width="4.2" height="16" rx="1"/></svg>';
 function setMusicUI(playing){
-  document.getElementById('music-play-btn').textContent = playing ? '⏸' : '▶';
+  document.getElementById('music-play-btn').innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
   document.getElementById('music-fab').classList.toggle('playing', playing);
 }
 function toggleMusic(){
