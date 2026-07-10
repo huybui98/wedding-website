@@ -6,6 +6,15 @@
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
 <title>Ngọc Huy & Quỳnh Hương — Hành trình yêu thương</title>
 
+<!-- Open Graph — quyết định giao diện link preview khi dán vào Zalo/Facebook/Messenger.
+     Đổi og:image thành ảnh cưới đẹp nhất của hai bạn (nên là ảnh ngang, tỉ lệ ~1.91:1, ví dụ 1200x630px). -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ngọc Huy & Quỳnh Hương — Thư mời cưới">
+<meta property="og:description" content="12.10.2026 — Chúng mình chính thức nói lời trăm năm. Rất mong được đón tiếp bạn trong ngày vui!">
+<meta property="og:image" content="https://ik.imagekit.io/tziiyziat/family.webp">
+<meta property="og:locale" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
+
 <!-- =========================================================
      FIREBASE — kết nối backend thật (Firestore + Authentication)
      1) Tạo project miễn phí tại https://console.firebase.google.com
@@ -18,7 +27,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
-    getFirestore, collection, addDoc, updateDoc, deleteDoc, doc,
+    getFirestore, collection, addDoc, setDoc, updateDoc, deleteDoc, doc,
     onSnapshot, query, orderBy, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import {
@@ -47,7 +56,7 @@
         ready: true,
         db: getFirestore(app),
         auth: getAuth(app),
-        collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp,
+        collection, addDoc, setDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp,
         signInAnonymously, signInWithEmailAndPassword, onAuthStateChanged, signOut
       };
       firebaseReady = true;
@@ -61,6 +70,8 @@
   window.dispatchEvent(new Event('firebase-ready'));
 </script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2230%22%20fill%3D%22%23EDE3CC%22/%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2228.5%22%20fill%3D%22none%22%20stroke%3D%22%238B3A3A%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%203%22/%3E%3Ccircle%20cx%3D%2225%22%20cy%3D%2235%22%20r%3D%2211%22%20fill%3D%22none%22%20stroke%3D%22%233B2F2F%22%20stroke-width%3D%223.6%22/%3E%3Ccircle%20cx%3D%2239%22%20cy%3D%2235%22%20r%3D%2211%22%20fill%3D%22none%22%20stroke%3D%22%238B6F47%22%20stroke-width%3D%223.6%22/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://ik.imagekit.io">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -243,7 +254,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   border:1px solid var(--champagne-soft);
   display:inline-block;text-align:left;
 }
-.tl-card img{border-radius:4px;margin-bottom:14px;height:200px;width:100%;object-fit:contain;filter:sepia(.55) contrast(1.03);}
+.tl-card img{border-radius:4px;margin-bottom:14px;height:200px;width:100%;object-fit:cover;filter:sepia(.55) contrast(1.03);}
 .tl-date{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--champagne);font-weight:600;}
 .tl-card h3{font-size:22px;margin:6px 0 8px;}
 .tl-card p{font-size:14px;margin:0;}
@@ -352,6 +363,16 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 }
 .player-times{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-soft);margin-top:8px;letter-spacing:.02em;}
 .player-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px;}
+.volume-row{display:flex;align-items:center;gap:10px;margin-top:18px;padding:0 6px;color:var(--ink-soft);}
+.volume-row input[type=range]{
+  flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--ivory-deep);border-radius:3px;outline:none;
+}
+.volume-row input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--wine-deep);cursor:pointer;
+}
+.volume-row input[type=range]::-moz-range-thumb{
+  width:14px;height:14px;border-radius:50%;background:var(--wine-deep);cursor:pointer;border:none;
+}
 .player-btn{
   background:none;color:var(--wine-deep);font-size:17px;width:38px;height:38px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;transition:transform .18s ease, background .18s ease;
@@ -366,6 +387,21 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   .player-wrap{padding:30px 20px 26px;max-width:320px;}
   .player-controls{gap:10px;}
 }
+.back-to-top{
+  position:fixed;bottom:82px;right:20px;z-index:939;width:44px;height:44px;border-radius:50%;
+  background:var(--white);color:var(--wine-deep);border:2px solid var(--champagne);
+  box-shadow:0 8px 18px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transform:translateY(10px);
+  transition:opacity .25s ease, transform .25s ease;
+}
+.back-to-top.show{opacity:1;pointer-events:auto;transform:translateY(0);}
+.share-fab{
+  position:fixed;bottom:142px;right:20px;z-index:938;width:44px;height:44px;border-radius:50%;
+  background:var(--white);color:var(--wine-deep);border:2px solid var(--champagne);
+  box-shadow:0 8px 18px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;
+  transition:transform .2s ease;
+}
+@media(max-width:480px){ .share-fab{bottom:130px;} }
 .music-toggle-fab{
   position:fixed;bottom:22px;right:20px;z-index:940;width:52px;height:52px;border-radius:50%;
   background:var(--white);color:var(--wine-deep);font-size:20px;
@@ -448,7 +484,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 /* ===== gallery ===== */
 .masonry{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;grid-auto-flow:dense;}
 .masonry .g-item{border-radius:4px;overflow:hidden;cursor:pointer;position:relative;background:var(--ivory-deep);}
-.masonry .g-item img{width:100%;height:100%;object-fit:contain;aspect-ratio:1/1;}
+.masonry .g-item img{width:100%;height:100%;object-fit:cover;aspect-ratio:1/1;}
 .masonry .g-item.tall{grid-row:span 2;}
 .masonry .g-item.tall img{aspect-ratio:1/2.05;}
 @media(max-width:860px){.masonry{grid-template-columns:repeat(2,1fr);}}
@@ -459,6 +495,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .lb-close{top:24px;right:24px;}
 .lb-prev{left:24px;top:50%;transform:translateY(-50%);}
 .lb-next{right:24px;top:50%;transform:translateY(-50%);}
+.lightbox.single .lb-prev, .lightbox.single .lb-next{display:none;}
 
 /* ===== forms ===== */
 .form-card{max-width:640px;margin:0 auto;background:var(--white);border-radius:6px;padding:44px;box-shadow:var(--shadow);}
@@ -517,7 +554,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   display:flex;align-items:center;justify-content:center;border:2px dashed var(--champagne);color:var(--ink-soft);font-size:12px;
   padding:10px;
 }
-.qr-box.has-image{background:#fff;}
+.qr-box.has-image{background:#fff;cursor:pointer;}
 .qr-box img{width:100%;height:100%;object-fit:contain;display:block;}
 .acc-row{display:flex;align-items:center;justify-content:space-between;background:var(--ivory);border-radius:4px;padding:12px 16px;margin-top:14px;}
 .acc-row button{background:var(--champagne);color:#fff;padding:8px 14px;border-radius:3px;font-size:12px;}
@@ -527,7 +564,22 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .game-q{font-size:24px;margin-bottom:24px;}
 .game-opts{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
 .game-opt{padding:16px 30px;border-radius:4px;border:1.5px solid var(--champagne-soft);background:var(--ivory);font-size:15px;color:var(--ink);transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.game-result{margin-top:22px;font-family:var(--font-display);font-size:20px;color:var(--wine);}
+.game-opt:disabled{opacity:.45;cursor:not-allowed;background:var(--ivory-deep);}
+.game-opt.correct{
+  opacity:1 !important;background:#E3ECD9;border-color:#4B6B3A;color:#3d5a2e;
+  animation:opt-bounce .5s cubic-bezier(.34,1.56,.64,1);
+}
+.game-opt.wrong{
+  opacity:1 !important;background:#F0DAD3;border-color:#A13B2E;color:#A13B2E;
+  animation:opt-shake .45s ease;
+}
+.game-opt.correct-reveal{
+  opacity:1 !important;background:#E3ECD9;border-color:#4B6B3A;color:#3d5a2e;
+}
+@keyframes opt-bounce{0%{transform:scale(1);}40%{transform:scale(1.08);}70%{transform:scale(.97);}100%{transform:scale(1);}}
+@keyframes opt-shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(7px);}60%{transform:translateX(-5px);}80%{transform:translateX(3px);}}
+.game-result-icon{display:inline-block;margin-right:4px;}
+.game-result{margin-top:22px;font-family:var(--font-display);font-size:20px;color:var(--wine);animation:pop-in .4s cubic-bezier(.22,1,.36,1);}
 .game-progress{margin-top:26px;font-size:12px;color:var(--ink-soft);letter-spacing:.1em;text-transform:uppercase;}
 
 /* ===== footer ===== */
@@ -596,7 +648,13 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
 
 <div id="thread-bar"></div>
 <audio id="bg-audio" preload="none"></audio>
-<button class="music-toggle-fab" id="music-fab" onclick="toggleMusic()" title="Nhạc nền" aria-label="Bật/tắt nhạc nền"><span class="icon">🎵</span></button>
+<button class="music-toggle-fab" id="music-fab" onclick="toggleMusic()" title="Nhạc nền" aria-label="Bật/tắt nhạc nền"><span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z"/></svg></span></button>
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Về đầu trang" aria-label="Về đầu trang">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+<button class="share-fab" id="share-fab" onclick="shareInvite()" title="Chia sẻ thiệp mời" aria-label="Chia sẻ thiệp mời">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+</button>
 
 <nav id="site-nav">
   <div class="logo">NH <span class="logo-amp">&amp;</span> QH</div>
@@ -627,6 +685,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
     <div class="hero-actions">
       <a href="#rsvp" class="btn btn-primary">Xác nhận tham dự</a>
       <a href="#events" class="btn btn-outline">Xem địa điểm</a>
+      <button class="btn btn-outline" onclick="addToCalendar()">+ Thêm vào lịch</button>
     </div>
   </div>
 </header>
@@ -727,6 +786,10 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
         </button>
       </div>
+      <div class="volume-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+        <input type="range" id="music-volume" min="0" max="100" value="35" aria-label="Âm lượng">
+      </div>
     </div>
   </div>
 </section>
@@ -743,12 +806,12 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
       <form id="rsvp-form">
         <div class="row-2">
           <div class="field" id="f-name">
-            <label>Họ và tên *</label>
+            <label for="rsvp-fullname">Họ và tên *</label>
             <input type="text" id="rsvp-fullname" placeholder="Nguyễn Văn A">
             <div class="error-msg">Vui lòng nhập họ tên.</div>
           </div>
           <div class="field" id="f-phone">
-            <label>Số điện thoại *</label>
+            <label for="rsvp-phone">Số điện thoại *</label>
             <input type="tel" id="rsvp-phone" placeholder="09xx xxx xxx">
             <div class="error-msg">Số điện thoại chưa hợp lệ.</div>
           </div>
@@ -773,7 +836,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
         </div>
         <div class="row-2">
           <div class="field">
-            <label>Số người đi cùng</label>
+            <label for="rsvp-guests">Số người đi cùng</label>
             <select id="rsvp-guests">
               <option value="0">Đi một mình</option>
               <option value="1">+1</option>
@@ -783,7 +846,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
             </select>
           </div>
           <div class="field">
-            <label>Trẻ em đi cùng?</label>
+            <label for="rsvp-kids">Trẻ em đi cùng?</label>
             <select id="rsvp-kids">
               <option value="no">Không</option>
               <option value="yes">Có</option>
@@ -798,7 +861,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
           </div>
         </div>
         <div class="field">
-          <label>Lời nhắn cho cô dâu chú rể</label>
+          <label for="rsvp-message">Lời nhắn cho cô dâu chú rể</label>
           <textarea id="rsvp-message" rows="3" placeholder="Gửi lời chúc hoặc lưu ý nhỏ..."></textarea>
         </div>
         <button type="submit" class="form-submit" id="rsvp-submit">Gửi xác nhận</button>
@@ -829,12 +892,12 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
     <div class="form-card reveal" style="margin-bottom:44px;">
       <form id="wish-form">
         <div class="field" id="f-wish-name">
-          <label>Tên của bạn *</label>
+          <label for="wish-name">Tên của bạn *</label>
           <input type="text" id="wish-name" placeholder="Tên bạn">
           <div class="error-msg">Vui lòng nhập tên.</div>
         </div>
         <div class="field" id="f-wish-msg">
-          <label>Lời chúc *</label>
+          <label for="wish-message">Lời chúc *</label>
           <textarea id="wish-message" rows="4" placeholder="Chúc hai bạn trăm năm hạnh phúc..."></textarea>
           <div class="error-msg">Vui lòng nhập lời chúc.</div>
         </div>
@@ -855,7 +918,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
     </div>
     <div class="gift-card reveal">
       <h3 id="gift-bank-name">TPBank (Tiên Phong Bank)</h3>
-      <div class="qr-box" id="qr-box">
+      <div class="qr-box" id="qr-box" onclick="openQrModal()">
         <img id="qr-image" class="hidden" alt="Mã QR chuyển khoản">
         <span id="qr-placeholder">VietQR</span>
       </div>
@@ -1013,24 +1076,24 @@ const weddingConfig = {
     "https://ik.imagekit.io/tziiyziat/first_date.webp",
     "https://ik.imagekit.io/tziiyziat/first_meet.webp"
   ],
-  bank: { bankName: "TPBank (Tiên Phong Bank)", accountOwner: "Bùi Ngọc Huy", accountNumber: "0442 0335 001", qrImageUrl: "", giftEnabled: true },
+  bank: { bankName: "TPBank (Tiên Phong Bank)", accountOwner: "Bùi Ngọc Huy", accountNumber: "0442 0335 001", qrImageUrl: "https://ik.imagekit.io/tziiyziat/Images/myQRTPbank.webp", giftEnabled: true },
   game: [
-    { q: "Ai tỏ tình trước?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Là Ngọc Huy — tay run, giọng lạc cả tông! 😂" },
-    { q: "Ai nói nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Chắc chắn là Quỳnh Hương, Ngọc Huy chỉ biết gật đầu 😅" },
-    { q: "Ai dễ giận hơn?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Ngọc Huy giận nhanh nhưng cũng hết nhanh, 5 phút là hết 🥲" },
-    { q: "Ai nấu ăn ngon hơn?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Quỳnh Hương nấu ngon hơn, Ngọc Huy chỉ giỏi... rửa bát 🍳" },
-    { q: "Ai ngủ nướng nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Ngọc Huy — gọi 5 lần mới dậy, lần nào cũng \"5 phút nữa\" ⏰" },
-    { q: "Ai hay làm nũng hơn?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Quỳnh Hương — nhưng chỉ với Ngọc Huy thôi nha 🥰" },
-    { q: "Ai chi tiền nhiều hơn khi đi chơi?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Ngọc Huy — nhưng đổi lại được ánh mắt lấp lánh của Quỳnh Hương 💸" },
-    { q: "Ai xem phim mà khóc nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Quỳnh Hương — khóc từ trailer là có thật 😭" },
-    { q: "Ai sợ nhất khi cầu hôn bị từ chối?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Ngọc Huy — chuẩn bị 3 tháng mà tim đập như trống hội 💍" },
-    { q: "Ai hay quên ngày kỷ niệm hơn?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Ngọc Huy — phải để lịch nhắc trước cả tuần 📅" },
-    { q: "Ai chọn phim khi đi rạp?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Quỳnh Hương chọn, Ngọc Huy chỉ được quyền mua bắp nước 🍿" },
-    { q: "Ai giỏi cãi lý hơn khi tranh luận?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Quỳnh Hương — có lý luôn thắng, vô lý cũng thắng 😆" },
-    { q: "Ai sẽ đi làm muộn nhiều hơn sau khi cưới?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Chắc là cả hai, vì ai cũng muốn nướng thêm chút nữa 🛏️" },
-    { q: "Ai chụp ảnh xấu nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Ngọc Huy — 10 tấm thì 9 tấm mắt nhắm 📸" },
-    { q: "Ai sẽ là người xin lỗi trước sau khi cãi nhau?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Ngọc Huy — không nhịn được lâu quá 2 giờ đồng hồ ☺️" },
-    { q: "Ai hay đổi ý lúc chọn menu cưới?", options: ["Ngọc Huy","Quỳnh Hương"], result: "Quỳnh Hương — đổi món tới lần thứ 5 mới chốt 🍰" }
+    { q: "Ai tỏ tình trước?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Là Ngọc Huy — tay run, giọng lạc cả tông! 😂" },
+    { q: "Ai nói nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Chắc chắn là Quỳnh Hương, Ngọc Huy chỉ biết gật đầu 😅" },
+    { q: "Ai dễ giận hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Ngọc Huy giận nhanh nhưng cũng hết nhanh, 5 phút là hết 🥲" },
+    { q: "Ai nấu ăn ngon hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Quỳnh Hương nấu ngon hơn, Ngọc Huy chỉ giỏi... rửa bát 🍳" },
+    { q: "Ai ngủ nướng nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Ngọc Huy — gọi 5 lần mới dậy, lần nào cũng \"5 phút nữa\" ⏰" },
+    { q: "Ai hay làm nũng hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Quỳnh Hương — nhưng chỉ với Ngọc Huy thôi nha 🥰" },
+    { q: "Ai chi tiền nhiều hơn khi đi chơi?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Ngọc Huy — nhưng đổi lại được ánh mắt lấp lánh của Quỳnh Hương 💸" },
+    { q: "Ai xem phim mà khóc nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Quỳnh Hương — khóc từ trailer là có thật 😭" },
+    { q: "Ai sợ nhất khi cầu hôn bị từ chối?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Ngọc Huy — chuẩn bị 3 tháng mà tim đập như trống hội 💍" },
+    { q: "Ai hay quên ngày kỷ niệm hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Ngọc Huy — phải để lịch nhắc trước cả tuần 📅" },
+    { q: "Ai chọn phim khi đi rạp?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Quỳnh Hương chọn, Ngọc Huy chỉ được quyền mua bắp nước 🍿" },
+    { q: "Ai giỏi cãi lý hơn khi tranh luận?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Quỳnh Hương — có lý luôn thắng, vô lý cũng thắng 😆" },
+    { q: "Ai sẽ đi làm muộn nhiều hơn sau khi cưới?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "both", result: "Chắc là cả hai, vì ai cũng muốn nướng thêm chút nữa 🛏️" },
+    { q: "Ai chụp ảnh xấu nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Ngọc Huy — 10 tấm thì 9 tấm mắt nhắm 📸" },
+    { q: "Ai sẽ là người xin lỗi trước sau khi cãi nhau?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Ngọc Huy — không nhịn được lâu quá 2 giờ đồng hồ ☺️" },
+    { q: "Ai hay đổi ý lúc chọn menu cưới?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Quỳnh Hương — đổi món tới lần thứ 5 mới chốt 🍰" }
   ],
   // Đăng nhập admin dùng Firebase Authentication (Email/Password) — xem README-FIREBASE.md
 };
@@ -1159,8 +1222,9 @@ const CloudService = {
   async addRsvp(data){
     if(!window.FB || !window.FB.ready) return { ok:false, reason:'not-configured' };
     try{
-      const { db, collection, addDoc, serverTimestamp } = window.FB;
-      await addDoc(collection(db,'rsvps'), { ...data, createdAt: serverTimestamp() });
+      const { db, doc, setDoc, serverTimestamp } = window.FB;
+      const docId = anonUid || uid();
+      await setDoc(doc(db,'rsvps', docId), { ...data, ownerUid: docId, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }, { merge:true });
       return { ok:true };
     }catch(e){ console.error('addRsvp error', e); return { ok:false, reason:e.message }; }
   },
@@ -1235,6 +1299,8 @@ function onScrollFrame(){
   navEl.classList.toggle('scrolled', window.scrollY>40);
   const p = Math.min(1, window.scrollY / (document.body.scrollHeight - window.innerHeight));
   threadBarEl.style.transform = 'scaleX('+p+')';
+  const backToTop = document.getElementById('back-to-top');
+  if(backToTop) backToTop.classList.toggle('show', window.scrollY > window.innerHeight);
   scrollTicking = false;
 }
 window.addEventListener('scroll', ()=>{
@@ -1272,6 +1338,52 @@ function initReveal(){
 /* =========================================================
    HERO: names / date / countdown / petals
    ========================================================= */
+function shareInvite(){
+  const shareData = {
+    title: `Thư mời cưới ${weddingConfig.groom} & ${weddingConfig.bride}`,
+    text: `Ngọc Huy & Quỳnh Hương trân trọng mời bạn đến chung vui trong ngày cưới 12.10.2026!`,
+    url: location.href
+  };
+  if(navigator.share){
+    navigator.share(shareData).catch(()=>{});
+  }else{
+    navigator.clipboard.writeText(location.href).then(()=>{
+      showToast('✓ Đã sao chép link thiệp mời');
+    }).catch(()=>{
+      showToast('Không thể chia sẻ — vui lòng copy link thủ công');
+    });
+  }
+}
+
+function addToCalendar(){
+  const start = new Date(weddingConfig.weddingDate);
+  const end = new Date(start.getTime() + 3*60*60*1000); // mặc định 3 tiếng
+  const fmt = d => d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+  const firstEvent = (weddingConfig.events||[])[0] || {};
+  const title = `Lễ cưới ${weddingConfig.groom} & ${weddingConfig.bride}`;
+  const desc = `Thư mời cưới của ${weddingConfig.groom} & ${weddingConfig.bride}.`;
+  const location = firstEvent.address || '';
+  const ics = [
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Wedding//VN',
+    'BEGIN:VEVENT',
+    `UID:${uid()}@wedding`,
+    `DTSTAMP:${fmt(new Date())}`,
+    `DTSTART:${fmt(start)}`,
+    `DTEND:${fmt(end)}`,
+    `SUMMARY:${title}`,
+    `DESCRIPTION:${desc}`,
+    `LOCATION:${location}`,
+    'END:VEVENT','END:VCALENDAR'
+  ].join('\r\n');
+  const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'wedding-invite.ics';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('📅 Đã tải file lịch — mở lên để thêm vào lịch của bạn');
+}
+
 function initHero(){
   document.getElementById('groom-name').textContent = weddingConfig.groom;
   document.getElementById('bride-name').textContent = weddingConfig.bride;
@@ -1363,6 +1475,14 @@ function initMusic(){
   const audio = document.getElementById('bg-audio');
   audio.volume = weddingConfig.musicVolume ?? 0.35;
   loadTrack(0, false);
+
+  const volumeSlider = document.getElementById('music-volume');
+  if(volumeSlider){
+    volumeSlider.value = Math.round(audio.volume*100);
+    volumeSlider.addEventListener('input', ()=>{
+      audio.volume = volumeSlider.value/100;
+    });
+  }
 
   audio.addEventListener('timeupdate', ()=>{
     if(audio.duration){
@@ -1466,7 +1586,7 @@ function initTimeline(){
     <div class="tl-item ${i%2===0?'reveal-left':'reveal-right'}">
       <div class="tl-dot"></div>
       <div class="tl-card">
-        <img src="${item.img}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async">
+        <img src="${ikResize(item.img,700)}" width="700" height="200" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async">
         <div class="tl-date">${escapeHtml(item.date)}</div>
         <h3>${escapeHtml(item.title)}</h3>
         <p>${escapeHtml(item.desc)}</p>
@@ -1490,7 +1610,7 @@ function initEvents(){
         <div><b>Dress code</b><span>${escapeHtml(ev.dresscode)}</span></div>
         <div><b>Ghi chú</b><span>${escapeHtml(ev.note)}</span></div>
       </div>
-      <a href="${ev.mapUrl}" target="_blank" class="btn btn-outline">Xem trên Google Maps</a>
+      <a href="${ev.mapUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Xem trên Google Maps</a>
     </div>
   `).join('');
 }
@@ -1499,19 +1619,53 @@ function initEvents(){
    GALLERY + LIGHTBOX
    ========================================================= */
 let galleryImgs = [];
+function ikResize(url, width, quality){
+  if(!url || !url.includes('ik.imagekit.io')) return url;
+  const sep = url.includes('?') ? '&' : '?';
+  return `${url}${sep}tr=w-${width},q-${quality||75}`;
+}
 function initGallery(){
   galleryImgs = weddingConfig.gallery;
   const el = document.getElementById('gallery-grid');
   el.innerHTML = galleryImgs.map((src,i)=>`
     <div class="g-item reveal-zoom ${i%5===0?'tall':''}" onclick="openLightbox(${i})">
-      <img src="${src}" alt="Ảnh cưới ${i+1}" loading="lazy" decoding="async">
+      <img src="${ikResize(src,500)}" width="500" height="500" alt="Ảnh cưới ${i+1}" loading="lazy" decoding="async">
     </div>
   `).join('');
 }
 let lbIndex = 0;
-function openLightbox(i){ lbIndex=i; document.getElementById('lightbox-img').src=galleryImgs[i]; document.getElementById('lightbox').classList.add('open'); }
+function openLightbox(i){
+  lbIndex=i;
+  document.getElementById('lightbox-img').src=ikResize(galleryImgs[i],1600,82);
+  document.getElementById('lightbox').classList.remove('single');
+  document.getElementById('lightbox').classList.add('open');
+}
+function openQrModal(){
+  const url = weddingConfig.bank.qrImageUrl;
+  if(!url) return;
+  document.getElementById('lightbox-img').src = url;
+  document.getElementById('lightbox').classList.add('single');
+  document.getElementById('lightbox').classList.add('open');
+}
 function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
-function navLightbox(dir){ lbIndex=(lbIndex+dir+galleryImgs.length)%galleryImgs.length; document.getElementById('lightbox-img').src=galleryImgs[lbIndex]; }
+function navLightbox(dir){ lbIndex=(lbIndex+dir+galleryImgs.length)%galleryImgs.length; document.getElementById('lightbox-img').src=ikResize(galleryImgs[lbIndex],1600,82); }
+document.addEventListener('keydown', (e)=>{
+  const lb = document.getElementById('lightbox');
+  if(!lb.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  else if(e.key === 'ArrowLeft') navLightbox(-1);
+  else if(e.key === 'ArrowRight') navLightbox(1);
+});
+(function initLightboxSwipe(){
+  const lb = document.getElementById('lightbox');
+  let touchStartX = 0;
+  lb.addEventListener('touchstart', (e)=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
+  lb.addEventListener('touchend', (e)=>{
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 50){ navLightbox(dx > 0 ? -1 : 1); }
+  }, {passive:true});
+  lb.addEventListener('click', (e)=>{ if(e.target === lb) closeLightbox(); });
+})();
 
 /* =========================================================
    CHIPS (radio styling)
@@ -1784,16 +1938,30 @@ function renderGame(){
   card.innerHTML = `
     <div class="game-q reveal-pop">${escapeHtml(q.q)}</div>
     <div class="game-opts">
-      ${q.options.map(o=>`<button class="game-opt" onclick="answerGame()">${escapeHtml(o)}</button>`).join('')}
+      ${q.options.map(o=>`<button class="game-opt" data-option="${escapeHtml(o)}" onclick="answerGame(this)">${escapeHtml(o)}</button>`).join('')}
     </div>
-    <div class="game-result hidden" id="game-result">${escapeHtml(q.result)}</div>
+    <div class="game-result hidden" id="game-result"></div>
     <div class="game-progress">Câu ${gameIndex+1} / ${gameRound.length}</div>
   `;
 }
-function answerGame(){
-  document.getElementById('game-result').classList.remove('hidden');
+function answerGame(btnEl){
+  const q = gameRound[gameIndex];
+  const chosen = btnEl.dataset.option;
+  const isCorrect = q.answer === 'both' || chosen === q.answer;
+
   document.querySelectorAll('.game-opt').forEach(b=>b.disabled=true);
-  setTimeout(()=>{ gameIndex++; renderGame(); }, 1400);
+  btnEl.classList.add(isCorrect ? 'correct' : 'wrong');
+  if(!isCorrect){
+    document.querySelectorAll('.game-opt').forEach(b=>{
+      if(b.dataset.option === q.answer) b.classList.add('correct-reveal');
+    });
+  }
+
+  const resultEl = document.getElementById('game-result');
+  resultEl.innerHTML = `<span class="game-result-icon">${isCorrect ? '✅' : '💡'}</span> ${escapeHtml(q.result)}`;
+  resultEl.classList.remove('hidden');
+
+  setTimeout(()=>{ gameIndex++; renderGame(); }, 1800);
 }
 
 /* =========================================================
@@ -1969,7 +2137,7 @@ function exportCSV(){
   const blob = new Blob(['\uFEFF'+csvRows.join('\n')], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'rsvp_huy_linh.csv';
+  a.href = url; a.download = 'rsvp_ngochuy_quynhhuong.csv';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
@@ -1985,7 +2153,7 @@ function initEnvelopeIntro(){
   const box = document.getElementById('envelope-box');
   if(!overlay || !box) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced){ overlay.remove(); return; }
+  if(reduced || location.hash === '#/admin'){ overlay.remove(); return; }
 
   let opened = false;
   function openEnvelope(){
