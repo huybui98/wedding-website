@@ -326,11 +326,20 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .cal-grid .cal-day.today{color:#fff;font-weight:700;}
 .cal-grid .cal-day.today .day-num{color:#fff;font-size:14px;}
 .cal-grid .cal-day.today .heart-bg{
-  position:absolute;top:53%;left:50%;transform:translate(-50%,-50%);
+  position:absolute;top:53%;left:50%;
   z-index:0;pointer-events:none;line-height:1;
   font-family:Arial,Helvetica,sans-serif;
-  font: size 68px;;color:var(--wine);
+  font-size:58px;color:var(--wine);
   text-shadow:0 1px 1px rgba(0,0,0,.05);
+  transform-origin:center;
+  animation:heartbeat 1.6s ease-in-out infinite;
+}
+@keyframes heartbeat{
+  0%, 100%   { transform:translate(-50%,-50%) scale(1); }
+  14%        { transform:translate(-50%,-50%) scale(1.28); }
+  28%        { transform:translate(-50%,-50%) scale(1); }
+  42%        { transform:translate(-50%,-50%) scale(1.22); }
+  70%        { transform:translate(-50%,-50%) scale(1); }
 }
 .cal-caption{text-align:center;margin-top:22px;}
 .cal-caption #cal-solar-line{font-family:var(--font-display);font-size:18px;color:var(--wine-deep);font-weight:600;}
@@ -653,6 +662,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
   .reveal, .reveal-left, .reveal-right, .reveal-zoom{transition:none;opacity:1;transform:none;}
   html{scroll-behavior:auto;}
   .envelope-intro{display:none;}
+  .cal-grid .cal-day.today .heart-bg{animation:none;transform:translate(-50%,-50%);}
 }
 
 /* Hover effects chỉ áp dụng cho thiết bị có con trỏ thật (chuột) — tránh bị 'dính' trạng thái hover sau khi chạm trên mobile */
@@ -1278,11 +1288,6 @@ function enableSubmitButtons(){
   const wishBtn = document.getElementById('wish-submit-btn');
   if(wishBtn && wishBtn.disabled){ wishBtn.disabled = false; wishBtn.textContent = 'Gửi lời chúc'; }
 }
-// Dự phòng: nếu sau 6 giây mà Firebase vẫn chưa phản hồi (vd. bị mạng chặn
-// hoàn toàn CDN gstatic.com), tự mở khoá nút thay vì để khách kẹt vĩnh viễn.
-// Khi đó CloudService sẽ tự báo lỗi "chưa cấu hình" khi bấm gửi — vẫn tốt
-// hơn nhiều so với việc nút không bao giờ bấm được.
-setTimeout(enableSubmitButtons, 6000);
 
 const CloudService = {
   async addRsvp(data){
