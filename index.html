@@ -162,7 +162,7 @@ img{max-width:100%;display:block;}
 
 /* ===== nav ===== */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:900;
+  position:fixed;top:0;left:0;right:0;z-index:1000;
   display:flex;align-items:center;justify-content:space-between;
   padding:18px 32px;
   background:rgba(237,227,204,0.0);
@@ -329,7 +329,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   position:absolute;top:53%;left:50%;transform:translate(-50%,-50%);
   z-index:0;pointer-events:none;line-height:1;
   font-family:Arial,Helvetica,sans-serif;
-  font-size:58px;color:var(--wine);
+  font: size 68px;;color:var(--wine);
   text-shadow:0 1px 1px rgba(0,0,0,.05);
 }
 .cal-caption{text-align:center;margin-top:22px;}
@@ -373,7 +373,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .player-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px;}
 .volume-row{display:flex;align-items:center;gap:10px;margin-top:18px;padding:0 6px;color:var(--ink-soft);}
 .volume-row input[type=range]{
-  flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--ivory-deep);border-radius:3px;outline:none;
+  flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--ivory-deep);border-radius:3px;outline:none;touch-action:none;
 }
 .volume-row input[type=range]::-webkit-slider-thumb{
   -webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--wine-deep);cursor:pointer;
@@ -597,9 +597,11 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .game-opts{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
 .game-opt{padding:16px 30px;border-radius:4px;border:1.5px solid var(--champagne-soft);background:var(--ivory);font-size:15px;color:var(--ink);transition:all .2s;-webkit-tap-highlight-color:transparent;}
 /* Chống trình duyệt trong-app (Zalo/Messenger...) tự chèn link màu xanh gạch chân
-   cho các cụm text trông giống số điện thoại/ngày tháng bên trong các khối này. */
-.btn *, .chip *, .tl-card *, .event-card *, .nav-links a, .nav-links a *,
-.game-opt *, .wish-card *, .stat-card *, .player-wrap *, .cal-card *, .logo *, footer *{
+   cho các cụm text trông giống số điện thoại/ngày tháng bên trong các khối này.
+   Chỉ nhắm vào thẻ <a> thật sự bị chèn — không đụng tới màu chữ có chủ đích của các phần tử khác. */
+.btn a, .chip a, .tl-card a, .event-card a, .nav-links a,
+.game-opt a, .wish-card a, .stat-card a, .player-wrap a, .cal-card a, .logo a, footer a,
+.btn a *, .chip a *, .tl-card a *, .event-card a *, .game-opt a *, .cal-card a *{
   color:inherit !important;text-decoration:none !important;
 }
 .game-opt:disabled{opacity:.45;cursor:not-allowed;background:var(--ivory-deep);}
@@ -1230,7 +1232,18 @@ let isAdminSignedIn = false;
 function waitForFirebase(){
   return new Promise(resolve=>{
     if(window.FB){ resolve(); return; }
-    window.addEventListener('firebase-ready', ()=>resolve(), { once:true });
+    // Nếu sau 6s vẫn chưa có window.FB (import Firebase bị chặn hoàn toàn),
+    // tự coi như "chưa cấu hình" và resolve, để mọi nơi gọi hàm này
+    // (submit RSVP/lời chúc, danh sách lời chúc, trang admin) đều thoát
+    // khỏi trạng thái treo thay vì chờ vô thời hạn.
+    const failsafe = setTimeout(()=>{
+      if(!window.FB) window.FB = { ready:false };
+      resolve();
+    }, 6000);
+    window.addEventListener('firebase-ready', ()=>{
+      clearTimeout(failsafe);
+      resolve();
+    }, { once:true });
   });
 }
 
@@ -1265,6 +1278,11 @@ function enableSubmitButtons(){
   const wishBtn = document.getElementById('wish-submit-btn');
   if(wishBtn && wishBtn.disabled){ wishBtn.disabled = false; wishBtn.textContent = 'Gửi lời chúc'; }
 }
+// Dự phòng: nếu sau 6 giây mà Firebase vẫn chưa phản hồi (vd. bị mạng chặn
+// hoàn toàn CDN gstatic.com), tự mở khoá nút thay vì để khách kẹt vĩnh viễn.
+// Khi đó CloudService sẽ tự báo lỗi "chưa cấu hình" khi bấm gửi — vẫn tốt
+// hơn nhiều so với việc nút không bao giờ bấm được.
+setTimeout(enableSubmitButtons, 6000);
 
 const CloudService = {
   async addRsvp(data){
@@ -1371,6 +1389,19 @@ document.getElementById('nav-toggle').addEventListener('click', ()=>{
 });
 document.getElementById('nav-close').addEventListener('click', closeNav);
 document.getElementById('nav-backdrop').addEventListener('click', closeNav);
+
+// Dự phòng: bắt click ra ngoài toàn trang, không chỉ dựa vào backdrop —
+// đảm bảo đóng được menu ngay cả khi z-index/pointer-events của backdrop
+// bị xung đột bởi trình duyệt trong-app lạ.
+document.addEventListener('click', (e)=>{
+  const links = document.getElementById('nav-links');
+  const toggle = document.getElementById('nav-toggle');
+  if(links.classList.contains('open')
+     && !links.contains(e.target)
+     && !toggle.contains(e.target)){
+    closeNav();
+  }
+});
 
 /* =========================================================
    REVEAL ON SCROLL
@@ -1542,11 +1573,27 @@ function initMusic(){
   loadTrack(0, false);
 
   const volumeSlider = document.getElementById('music-volume');
+  const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   if(volumeSlider){
-    volumeSlider.value = Math.round(audio.volume*100);
-    volumeSlider.addEventListener('input', ()=>{
-      audio.volume = volumeSlider.value/100;
-    });
+    if(isIOS){
+      // iOS Safari khoá cứng .volume của thẻ <audio> bằng JS (giới hạn của nền tảng, không phải lỗi code) —
+      // thanh trượt sẽ không có tác dụng thật nên thay bằng ghi chú, tránh gây hiểu lầm là bị lỗi.
+      const row = volumeSlider.closest('.volume-row');
+      if(row) row.innerHTML = `<span style="font-size:11px;color:var(--ink-soft);">🔊 Dùng nút âm lượng vật lý của máy để chỉnh</span>`;
+    }else{
+      const setFill = ()=>{
+        const pct = volumeSlider.value;
+        volumeSlider.style.background = `linear-gradient(to right, var(--wine-deep) ${pct}%, var(--ivory-deep) ${pct}%)`;
+      };
+      volumeSlider.value = Math.round(audio.volume*100);
+      setFill();
+      const applyVolume = ()=>{
+        audio.volume = Math.min(1, Math.max(0, volumeSlider.value/100));
+        setFill();
+      };
+      volumeSlider.addEventListener('input', applyVolume);
+      volumeSlider.addEventListener('change', applyVolume);
+    }
   }
 
   audio.addEventListener('timeupdate', ()=>{
