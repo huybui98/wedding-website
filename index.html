@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Thư mời cưới Ngọc Huy & Quỳnh Hương — 12.10.2026. Xem lịch cưới, chuyện tình, album ảnh, xác nhận tham dự và gửi lời chúc đến cô dâu chú rể.">
+<meta name="theme-color" content="#EDE3CC">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
 <title>Ngọc Huy & Quỳnh Hương — Hành trình yêu thương</title>
 
@@ -12,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ngọc Huy & Quỳnh Hương — Thư mời cưới">
 <meta property="og:description" content="12.10.2026 — Chúng mình chính thức nói lời trăm năm. Rất mong được đón tiếp bạn trong ngày vui!">
-<meta property="og:image" content="https://ik.imagekit.io/tziiyziat/family.webp">
+<meta property="og:image" content="https://ik.imagekit.io/tziiyziat/family.webp?tr=w-1200,h-630,fo-auto">
 <meta property="og:locale" content="vi_VN">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -123,7 +124,7 @@ img{max-width:100%;display:block;}
 }
 .section-title{font-size:clamp(30px,4vw,46px);margin:10px 0 14px;}
 .section-sub{max-width:560px;margin:0 auto 48px;text-align:center;font-size:16px;}
-.section{padding:110px 0;position:relative;}
+.section{padding:110px 0;position:relative;scroll-margin-top:90px;}
 .section.alt{background:var(--ivory-deep);}
 .center{text-align:center;}
 .btn{
@@ -226,6 +227,12 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .hero-amp{color:var(--champagne);padding:0 clamp(4px,1.2vw,12px);}
 .hero-date{margin-top:16px;font-family:var(--font-body);letter-spacing:.18em;font-size:14px;color:var(--ink-soft);text-transform:uppercase;}
 .countdown{display:flex;gap:clamp(6px,2.2vw,18px);justify-content:center;margin:38px 0;flex-wrap:nowrap;}
+.cd-done{
+  font-family:var(--font-display);font-size:clamp(15px,3.6vw,22px);color:var(--wine);
+  text-align:center;padding:14px 18px;border:1.5px dashed var(--champagne);border-radius:3px;
+  background:var(--white);animation:hint-pulse 2s ease-in-out infinite;
+}
+.cal-countdown .cd-done{color:var(--ivory);border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.08);}
 .cd-item{
   flex:1 1 0;min-width:0;max-width:90px;background:var(--white);border:1.5px dashed var(--champagne);
   border-radius:3px;padding:clamp(8px,2.6vw,14px) clamp(3px,1.6vw,10px);
@@ -422,25 +429,25 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 
 /* ===== tooltip cho các icon nổi ===== */
 .icon-fab{position:fixed;}
-.icon-fab[data-tooltip]::after{
+.icon-fab[data-tooltip]::before{
   content:attr(data-tooltip);position:absolute;top:50%;
   background:var(--wine-deep);color:var(--white);padding:7px 13px;border-radius:3px;
   font-family:var(--font-body);font-size:12px;letter-spacing:.02em;white-space:nowrap;
   border:1px dashed var(--champagne-soft);box-shadow:0 8px 18px rgba(0,0,0,.28);
   opacity:0;pointer-events:none;transition:opacity .2s ease, transform .2s ease;z-index:1500;
 }
-.tooltip-left::after{right:100%;transform:translateY(-50%) translateX(6px);margin-right:12px;}
-.tooltip-right::after{left:100%;transform:translateY(-50%) translateX(-6px);margin-left:12px;}
+.tooltip-left::before{right:100%;transform:translateY(-50%) translateX(6px);margin-right:12px;}
+.tooltip-right::before{left:100%;transform:translateY(-50%) translateX(-6px);margin-left:12px;}
 @media(hover:hover) and (pointer:fine){
-  .tooltip-left:hover::after{opacity:1;transform:translateY(-50%) translateX(0);}
-  .tooltip-right:hover::after{opacity:1;transform:translateY(-50%) translateX(0);}
+  .tooltip-left:hover::before{opacity:1;transform:translateY(-50%) translateX(0);}
+  .tooltip-right:hover::before{opacity:1;transform:translateY(-50%) translateX(0);}
   .back-to-top:hover svg{animation:hint-arrow-up .7s ease-in-out infinite;}
   .share-fab:hover svg{animation:hint-wiggle .5s ease;}
   .music-toggle-fab:hover .icon{animation:notes-bob 1s ease-in-out infinite;}
 }
 @keyframes hint-arrow-up{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
 @keyframes hint-wiggle{0%,100%{transform:rotate(0deg);}25%{transform:rotate(-10deg);}75%{transform:rotate(10deg);}}
-@media(max-width:600px){ .icon-fab[data-tooltip]::after{display:none;} }
+@media(max-width:600px){ .icon-fab[data-tooltip]::before{display:none;} }
 
 .app-toast{
   position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
@@ -589,6 +596,12 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .game-q{font-size:24px;margin-bottom:24px;}
 .game-opts{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
 .game-opt{padding:16px 30px;border-radius:4px;border:1.5px solid var(--champagne-soft);background:var(--ivory);font-size:15px;color:var(--ink);transition:all .2s;-webkit-tap-highlight-color:transparent;}
+/* Chống trình duyệt trong-app (Zalo/Messenger...) tự chèn link màu xanh gạch chân
+   cho các cụm text trông giống số điện thoại/ngày tháng bên trong các khối này. */
+.btn *, .chip *, .tl-card *, .event-card *, .nav-links a, .nav-links a *,
+.game-opt *, .wish-card *, .stat-card *, .player-wrap *, .cal-card *, .logo *, footer *{
+  color:inherit !important;text-decoration:none !important;
+}
 .game-opt:disabled{opacity:.45;cursor:not-allowed;background:var(--ivory-deep);}
 .game-opt.correct{
   opacity:1 !important;background:#E3ECD9;border-color:#4B6B3A;color:#3d5a2e;
@@ -890,7 +903,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
           <label for="rsvp-message">Lời nhắn cho cô dâu chú rể</label>
           <textarea id="rsvp-message" rows="3" placeholder="Gửi lời chúc hoặc lưu ý nhỏ..."></textarea>
         </div>
-        <button type="submit" class="form-submit" id="rsvp-submit">Gửi xác nhận</button>
+        <button type="submit" class="form-submit" id="rsvp-submit" disabled>Đang kết nối...</button>
       </form>
       <div class="form-state hidden" id="rsvp-success">
         <div class="icon">💌</div>
@@ -927,7 +940,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
           <textarea id="wish-message" rows="4" placeholder="Chúc hai bạn trăm năm hạnh phúc..."></textarea>
           <div class="error-msg">Vui lòng nhập lời chúc.</div>
         </div>
-        <button type="submit" class="form-submit" id="wish-submit-btn">Gửi lời chúc</button>
+        <button type="submit" class="form-submit" id="wish-submit-btn" disabled>Đang kết nối...</button>
       </form>
     </div>
     <div id="wishes-list" class="reveal"></div>
@@ -981,10 +994,10 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
 
 <!-- ================= LIGHTBOX ================= -->
 <div class="lightbox" id="lightbox">
-  <button class="lb-close" onclick="closeLightbox()">✕</button>
-  <button class="lb-prev" onclick="navLightbox(-1)">‹</button>
+  <button class="lb-close" onclick="closeLightbox()" aria-label="Đóng">✕</button>
+  <button class="lb-prev" onclick="navLightbox(-1)" aria-label="Ảnh trước">‹</button>
   <img id="lightbox-img" src="" alt="">
-  <button class="lb-next" onclick="navLightbox(1)">›</button>
+  <button class="lb-next" onclick="navLightbox(1)" aria-label="Ảnh sau">›</button>
 </div>
 
 <!-- ================= ADMIN ================= -->
@@ -1056,7 +1069,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
 const weddingConfig = {
   groom: "Ngọc Huy",
   bride: "Quỳnh Hương",
-  weddingDate: "2026-10-12T17:00:00",
+  weddingDate: "2026-10-12T17:00:00+07:00",
   timeZone: 7,
   // Danh sách nhạc nền — thêm bao nhiêu bài tuỳ ý, khách sẽ next/back qua lại được.
   // (ví dụ Firebase Storage, hoặc để chung thư mục với file HTML này) → dán URL file đó vào "url".
@@ -1223,7 +1236,7 @@ function waitForFirebase(){
 
 async function initFirebaseAuth(){
   await waitForFirebase();
-  if(!window.FB || !window.FB.ready){ fbAuthReady = false; return; }
+  if(!window.FB || !window.FB.ready){ fbAuthReady = false; enableSubmitButtons(); return; }
   const { auth, signInAnonymously, onAuthStateChanged } = window.FB;
   onAuthStateChanged(auth, (user)=>{
     if(user && user.isAnonymous){
@@ -1242,6 +1255,15 @@ async function initFirebaseAuth(){
     console.error('Anonymous sign-in error', e);
     fbAuthReady = false;
   }
+  enableSubmitButtons();
+}
+// Chỉ mở khoá nút gửi RSVP/Lời chúc SAU KHI anonUid đã sẵn sàng — tránh trường hợp
+// khách bấm gửi cực nhanh trước khi có anonUid, khiến sau này nút "Sửa" không nhận ra đúng chủ nhân.
+function enableSubmitButtons(){
+  const rsvpBtn = document.getElementById('rsvp-submit');
+  if(rsvpBtn && rsvpBtn.disabled){ rsvpBtn.disabled = false; rsvpBtn.textContent = 'Gửi xác nhận'; }
+  const wishBtn = document.getElementById('wish-submit-btn');
+  if(wishBtn && wishBtn.disabled){ wishBtn.disabled = false; wishBtn.textContent = 'Gửi lời chúc'; }
 }
 
 const CloudService = {
@@ -1410,16 +1432,31 @@ function addToCalendar(){
   showToast('📅 Đã tải file lịch — mở lên để thêm vào lịch của bạn');
 }
 
+// Trả về các thành phần ngày giờ ĐÚNG NHƯ TÁC GIẢ NHẬP (giờ Việt Nam), bất kể múi giờ trình duyệt khách.
+// Dùng cho hiển thị (ngày/giờ lễ cưới luôn cố định theo giờ VN cho mọi khách xem từ đâu).
+function getWeddingDateParts(){
+  const m = weddingConfig.weddingDate.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+  return { year:+m[1], month:+m[2], day:+m[3], hour:+m[4], minute:+m[5] };
+}
+
 function initHero(){
   document.getElementById('groom-name').textContent = weddingConfig.groom;
   document.getElementById('bride-name').textContent = weddingConfig.bride;
   const d = new Date(weddingConfig.weddingDate);
-  document.getElementById('hero-date').textContent = d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const parts = getWeddingDateParts();
+  document.getElementById('hero-date').textContent = `${String(parts.day).padStart(2,'0')}/${String(parts.month).padStart(2,'0')}/${parts.year}`;
 
   function tick(){
     const now = new Date();
     let diff = d - now;
-    if(diff<0) diff=0;
+    if(diff<0){
+      const doneHtml = `<div class="cd-done">💍 Hôm nay chính là ngày trọng đại! 💍</div>`;
+      document.getElementById('countdown').innerHTML = doneHtml;
+      const cd2 = document.getElementById('countdown-2');
+      if(cd2) cd2.innerHTML = doneHtml;
+      clearInterval(tickTimer);
+      return;
+    }
     const days = Math.floor(diff/86400000);
     const hours = Math.floor((diff%86400000)/3600000);
     const mins = Math.floor((diff%3600000)/60000);
@@ -1431,15 +1468,17 @@ function initHero(){
     const cd2 = document.getElementById('countdown-2');
     if(cd2) cd2.innerHTML = html;
   }
-  tick(); setInterval(tick,1000);
+  let tickTimer;
+  tick(); tickTimer = setInterval(tick,1000);
 }
 
 /* =========================================================
    CALENDAR SECTION
    ========================================================= */
 function initCalendar(){
-  const d = new Date(weddingConfig.weddingDate);
-  const year = d.getFullYear(), month = d.getMonth(), day = d.getDate();
+  const parts = getWeddingDateParts();
+  const year = parts.year, month = parts.month - 1, day = parts.day; // month 0-indexed để khớp Date JS
+  const localD = new Date(year, month, day); // chỉ dùng để tính thứ trong tuần & lịch âm — an toàn với mọi múi giờ
   const monthNames = ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"];
   document.getElementById('cal-month-title').textContent = `${monthNames[month]}, ${year}`;
 
@@ -1455,12 +1494,12 @@ function initCalendar(){
   document.getElementById('cal-grid').innerHTML = cells;
 
   const weekdayNames = ["Chủ Nhật","Thứ Hai","Thứ Ba","Thứ Tư","Thứ Năm","Thứ Sáu","Thứ Bảy"];
-  const hh = d.getHours().toString().padStart(2,'0');
-  const mm = d.getMinutes().toString().padStart(2,'0');
+  const hh = String(parts.hour).padStart(2,'0');
+  const mm = String(parts.minute).padStart(2,'0');
   document.getElementById('cal-solar-line').textContent =
-    `${weekdayNames[d.getDay()]}, ${day} ${monthNames[month]}, ${year} · ${hh}:${mm}`;
+    `${weekdayNames[localD.getDay()]}, ${day} ${monthNames[month]}, ${year} · ${hh}:${mm} (giờ Việt Nam)`;
   document.getElementById('cal-lunar-line').textContent =
-    `Tức ngày ${Lunar.format(d, weddingConfig.timeZone || 7)} — Âm lịch`;
+    `Tức ngày ${Lunar.format(localD, weddingConfig.timeZone || 7)} — Âm lịch`;
 }
 
 /* =========================================================
@@ -1679,6 +1718,7 @@ document.addEventListener('keydown', (e)=>{
   const lb = document.getElementById('lightbox');
   if(!lb.classList.contains('open')) return;
   if(e.key === 'Escape') closeLightbox();
+  else if(lb.classList.contains('single')) return; // ảnh đơn (VD: QR) — không có nút chuyển ảnh
   else if(e.key === 'ArrowLeft') navLightbox(-1);
   else if(e.key === 'ArrowRight') navLightbox(1);
 });
@@ -1687,6 +1727,7 @@ document.addEventListener('keydown', (e)=>{
   let touchStartX = 0;
   lb.addEventListener('touchstart', (e)=>{ touchStartX = e.touches[0].clientX; }, {passive:true});
   lb.addEventListener('touchend', (e)=>{
+    if(lb.classList.contains('single')) return;
     const dx = e.changedTouches[0].clientX - touchStartX;
     if(Math.abs(dx) > 50){ navLightbox(dx > 0 ? -1 : 1); }
   }, {passive:true});
@@ -1719,7 +1760,9 @@ function validateRsvp(){
 
   toggleFieldError('f-name', name.length < 2); if(name.length<2) valid=false;
   const phoneDigits = phone.replace(/[\s.-]/g,'');
-  const phoneOk = /^(0(3|5|7|8|9)[0-9]{8}|\+84(3|5|7|8|9)[0-9]{8})$/.test(phoneDigits);
+  const vnMobile = /^(0(3|5|7|8|9)[0-9]{8}|\+84(3|5|7|8|9)[0-9]{8})$/.test(phoneDigits);
+  const generalPhone = /^\+?[0-9]{8,15}$/.test(phoneDigits); // số bàn VN / số nước ngoài
+  const phoneOk = vnMobile || generalPhone;
   toggleFieldError('f-phone', !phoneOk); if(!phoneOk) valid=false;
   toggleFieldError('f-side', !side); if(!side) valid=false;
   toggleFieldError('f-attend', !attend); if(!attend) valid=false;
