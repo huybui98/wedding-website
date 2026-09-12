@@ -2380,7 +2380,12 @@ function initEnvelopeIntro(){
   const box = document.getElementById('envelope-box');
   if(!overlay || !box) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced || location.hash === '#/admin'){ overlay.remove(); return; }
+  function resetPageTop(){
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+  if(reduced || location.hash === '#/admin'){ resetPageTop(); overlay.remove(); return; }
 
   // Cho phép mở bằng bàn phím (Enter/Space) để không chỉ phụ thuộc vào chuột/chạm.
   overlay.setAttribute('role','button');
@@ -2391,6 +2396,7 @@ function initEnvelopeIntro(){
   function openEnvelope(){
     if(opened) return;
     opened = true;
+    resetPageTop();
     box.classList.add('open');
     setTimeout(()=>{
       overlay.classList.add('hide');
@@ -2403,7 +2409,10 @@ function initEnvelopeIntro(){
   });
   // Chỉ tự mở sau một khoảng đủ dài để khách có cơ hội thật sự chạm vào phong thư;
   // đây là lưới an toàn cho người không tương tác, không phải hành vi mặc định.
-  setTimeout(openEnvelope, 5000);
+  setTimeout(()=>{
+    resetPageTop();
+    openEnvelope();
+  }, 5000);
 }
 
 function safeRun(fn, label){
