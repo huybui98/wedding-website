@@ -185,7 +185,8 @@ img{max-width:100%;display:block;}
   position:fixed;top:0;left:0;height:3px;width:100%;
   background:linear-gradient(90deg,var(--champagne-soft),var(--thread));
   transform-origin:left;transform:scaleX(0);
-  z-index:9999;transition:transform .1s linear;
+  opacity:0;
+  z-index:9999;transition:transform .1s linear, opacity .15s ease;
 }
 
 /* ===== nav ===== */
@@ -1447,12 +1448,18 @@ function showToast(msg){
 /* =========================================================
    NAV
    ========================================================= */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 const navEl = document.getElementById('site-nav');
 const threadBarEl = document.getElementById('thread-bar');
 let scrollTicking = false;
 function onScrollFrame(){
   navEl.classList.toggle('scrolled', window.scrollY>40);
-  const p = Math.min(1, window.scrollY / (document.body.scrollHeight - window.innerHeight));
+  const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  const p = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+  threadBarEl.style.opacity = p > 0.02 ? '1' : '0';
   threadBarEl.style.transform = 'scaleX('+p+')';
   const backToTop = document.getElementById('back-to-top');
   if(backToTop) backToTop.classList.toggle('show', window.scrollY > window.innerHeight);
@@ -2380,12 +2387,7 @@ function initEnvelopeIntro(){
   const box = document.getElementById('envelope-box');
   if(!overlay || !box) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function resetPageTop(){
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }
-  if(reduced || location.hash === '#/admin'){ resetPageTop(); overlay.remove(); return; }
+  if(reduced || location.hash === '#/admin'){ overlay.remove(); return; }
 
   // Cho phép mở bằng bàn phím (Enter/Space) để không chỉ phụ thuộc vào chuột/chạm.
   overlay.setAttribute('role','button');
@@ -2396,7 +2398,6 @@ function initEnvelopeIntro(){
   function openEnvelope(){
     if(opened) return;
     opened = true;
-    resetPageTop();
     box.classList.add('open');
     setTimeout(()=>{
       overlay.classList.add('hide');
@@ -2408,11 +2409,9 @@ function initEnvelopeIntro(){
     if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openEnvelope(); }
   });
   // Chỉ tự mở sau một khoảng đủ dài để khách có cơ hội thật sự chạm vào phong thư;
-  // đây là lưới an toàn cho người không tương tác, không phải hành vi mặc định.
-  setTimeout(()=>{
-    resetPageTop();
-    openEnvelope();
-  }, 5000);
+  // không tự động reset scroll vì browser sẽ kéo sự kiện scroll restore / anchor
+  // và gây rung viewport ở mobile. Mục tiêu là chỉ mở overlay, không thay đổi vị trí trang.
+  setTimeout(openEnvelope, 5000);
 }
 
 function safeRun(fn, label){
