@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ngọc Huy & Quỳnh Hương — Thư mời cưới">
 <meta property="og:description" content="28.10.2026 — Chúng mình chính thức nói lời trăm năm. Rất mong được đón tiếp bạn trong ngày vui!">
-<meta property="og:image" content="https://ik.imagekit.io/tziiyziat/family.webp?tr=w-1200,h-630,fo-auto">
+<meta property="og:image" content="https://ik.imagekit.io/tziiyziat/DSC04137.JPG?tr=w-1200,h-630,fo-auto">
 <meta property="og:locale" content="vi_VN">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -138,6 +138,9 @@ img{max-width:100%;display:block;}
   .section{padding:62px 0;}
   .section-sub{margin-bottom:20px;}
   .form-card, .game-card, .gift-card, .event-card{padding-left:20px !important; padding-right:20px !important;}
+  .eyebrow{letter-spacing:.2em;font-size:11px;}
+  .section-title{font-size:clamp(28px,8vw,40px);margin:8px 0 12px;line-height:1.15;}
+  .section-sub{font-size:14px;line-height:1.8;max-width:420px;}
 }
 .eyebrow{
   font-family:var(--font-body);
@@ -268,6 +271,13 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 @media(max-width:560px){
   .hero-actions{display:grid;grid-template-columns:1fr;gap:12px;max-width:340px;margin:18px auto 0;}
   .hero-actions .btn{width:100%;justify-content:center;padding:14px 18px;letter-spacing:.08em;}
+  .hero-eyebrow{letter-spacing:.18em;font-size:10px;margin-bottom:12px;}
+  .hero-names{white-space:normal;max-width:280px;margin:0 auto;}
+  .hero-date{letter-spacing:.12em;font-size:12px;}
+  .countdown{gap:8px;margin:26px 0 30px;}
+  .cd-item{padding:12px 6px;max-width:74px;}
+  .cd-num{font-size:clamp(18px,7vw,26px);}
+  .cd-label{font-size:7px;letter-spacing:.06em;}
 }
 
 /* ===== timeline ===== */
@@ -313,17 +323,19 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   padding:6px 46px;transform:rotate(38deg);font-size:11px;letter-spacing:.14em;text-transform:uppercase;}
 .event-card h3{font-size:28px;margin-bottom:4px;}
 .event-meta{margin:18px 0;font-size:14px;}
-.event-meta div{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(139,111,71,.35);}
+.event-meta div{display:flex;gap:10px;padding:8px;border-bottom:1px dashed rgba(139,111,71,.35);}
 .event-meta b{color:var(--wine);min-width:96px;display:inline-block;font-weight:500;}
 .event-card .btn{margin-top:14px;}
 @media(max-width:760px){
-  .event-card{padding:30px 20px 24px;border:1.5px solid rgba(139,111,71,.35);background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(237,227,204,.35));}
+  .event-card{padding:30px 20px 24px;border:1.5px solid rgba(139,111,71,.35);}
   .event-meta{margin:16px 0 12px;}
   .event-meta div{display:block;gap:0;padding:12px 14px;border:1px solid rgba(139,111,71,.18);border-radius:5px;background:rgba(237,227,204,.26);margin-bottom:10px;}
   .event-meta b{display:block;min-width:0;margin-bottom:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;}
 }
 @media(max-width:560px){
-  .event-meta div{display:block;gap:0;padding:10px 0;}
+  .event-card{padding:24px 16px 18px;}
+  .event-card h3{font-size:clamp(24px,7.2vw,32px);line-height:1.2;}
+  .event-meta div{display:block;gap:0;padding:10px;}
   .event-meta b{display:block;min-width:0;margin-bottom:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;}
   .event-card .btn{display:flex;width:100%;justify-content:center;padding:14px 18px;letter-spacing:.08em;}
 }
@@ -459,7 +471,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   transition:transform .2s ease;
 }
 .music-toggle-fab{
-  position:fixed;bottom:calc(22px + env(safe-area-inset-bottom));left:calc(20px + env(safe-area-inset-left));z-index:940;width:54px;height:54px;border-radius:50%;
+  position:fixed;bottom:calc(22px + env(safe-area-inset-bottom));left:calc(20px + env(safe-area-inset-left));z-index:940;width:44px;height:44px;border-radius:50%;
   background:radial-gradient(circle at 32% 28%, var(--white) 0%, var(--ivory-deep) 100%);color:var(--wine-deep);font-size:20px;
   border:2px solid var(--wine-deep);box-shadow:0 8px 22px rgba(0,0,0,.28);
   display:flex;align-items:center;justify-content:center;transition:transform .2s;
@@ -507,7 +519,12 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   border:1px dashed var(--champagne-soft);
 }
 .app-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-@media(max-width:480px){ .app-toast{bottom:calc(80px + env(safe-area-inset-bottom));font-size:12px;padding:10px 18px;} }
+@media(max-width:480px){
+  .app-toast{bottom:calc(80px + env(safe-area-inset-bottom));font-size:12px;padding:10px 18px;}
+  .back-to-top{bottom:75px;right:15px;}
+  .share-fab{bottom:20px;right:15px;}
+  .music-toggle-fab{bottom:20px;left:15px;}
+}
 @keyframes pulse-music{0%,100%{box-shadow:0 8px 22px rgba(0,0,0,.28);}50%{box-shadow:0 8px 26px rgba(139,58,58,.5);}}
 
 /* ===== envelope intro ===== */
@@ -1146,7 +1163,7 @@ const weddingConfig = {
   timeline: [
     { date: "Tháng 12, 2025", title: "Lần đầu gặp nhau", desc: "Một buổi sáng mưa Hà Nội, hai đứa gặp nhau lần đầu ở sân cầu lông. Đâu ai nghĩ sẽ là định mệnh của nhau!.", img: "https://ik.imagekit.io/tziiyziat/first_meet.webp" },
     { date: "Tháng 12, 2025", title: "Lần đầu hẹn hò", desc: "Buổi hẹn đầu tiên cùng ngắm pháo hoa vào đêm countdown, ngại ngùng nhưng chẳng ai muốn về sớm. Ngày anh bắt đầu quen với việc đi đâu cũng có em.", img: "https://ik.imagekit.io/tziiyziat/first_date.webp" },
-    { date: "Tháng 08, 2026", title: "Cầu hôn", desc: "Dưới ánh đèn Hà Nội, một lời cầu hôn giản dị nhưng đủ khiến cả hai bật khóc. Đặt gạch dặm ngõ, gia đình đồng thuận.", img: "https://ik.imagekit.io/tziiyziat/propose.webp" },
+    { date: "Tháng 08, 2026", title: "Cầu hôn", desc: "Dưới ánh đèn Hà Nội, một lời cầu hôn giản dị nhưng đủ khiến cả hai bật khóc. Đặt gạch dặm ngõ, gia đình đồng thuận.", img: "https://ik.imagekit.io/tziiyziat/like4.jpg" },
     { date: "28.10.2026", title: "Ngày cưới - Ngày hạnh phúc", desc: "Ngày chúng mình chính thức nói lời trăm năm, trước gia đình và những người thương yêu nhất.", img: "https://ik.imagekit.io/tziiyziat/DSC04137.JPG" }
   ],
   events: [
@@ -1811,11 +1828,14 @@ function ikResize(url, width, quality){
 function initGallery(){
   galleryImgs = weddingConfig.gallery;
   const el = document.getElementById('gallery-grid');
-  el.innerHTML = galleryImgs.map((src,i)=>`
-    <div class="g-item reveal-zoom ${i%5===0?'tall':''}" onclick="openLightbox(${i})">
-      <img src="${ikResize(src,500)}" width="500" height="500" alt="Ảnh cưới ${i+1}" loading="lazy" decoding="async">
-    </div>
-  `).join('');
+  el.innerHTML = galleryImgs.map((src,i)=>{
+    const isTall = i % 5 === 0 && src !== 'https://ik.imagekit.io/tziiyziat/DSC04258.JPG';
+    return `
+      <div class="g-item reveal-zoom ${isTall ? 'tall' : ''}" onclick="openLightbox(${i})">
+        <img src="${ikResize(src,500)}" width="500" height="500" alt="Ảnh cưới ${i+1}" loading="lazy" decoding="async">
+      </div>
+    `;
+  }).join('');
 }
 let lbIndex = 0;
 function openLightbox(i){
@@ -2023,8 +2043,10 @@ document.getElementById('wish-form').addEventListener('submit', async (e)=>{
   let result;
   if(editingWishId){
     result = await CloudService.updateWish(editingWishId, { name, message: msg });
-    editingWishId = null;
-    btn.textContent = 'Gửi lời chúc';
+    if(result && result.ok){
+      editingWishId = null;
+      btn.textContent = 'Gửi lời chúc';
+    }
   }else{
     result = await CloudService.addWish({ name, message: msg });
   }
