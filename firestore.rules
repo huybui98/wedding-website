@@ -1,0 +1,64 @@
+rules_version = '2';
+
+// =====================================================================
+// FIRESTORE SECURITY RULES — dán nguyên văn vào Firebase Console →
+// Firestore Database → Rules → Publish.
+//
+// QUAN TRỌNG: đây là hàng rào bảo vệ THẬT SỰ cho dữ liệu khách mời.
+// firebaseConfig trong file HTML được lộ công khai là chuyện bình thường
+// với Firebase — nhưng nếu bạn KHÔNG dán đúng rules này, bất kỳ ai mở
+// DevTools cũng có thể đọc/ghi thẳng vào Firestore (kể cả họ tên, SĐT
+// khách mời) mà không cần qua giao diện web.
+//
+// Đổi "admin@ngochuy-quynhhuong.wedding" bên dưới cho khớp 100% với
+// window.ADMIN_EMAIL trong file HTML.
+// =====================================================================
+
+function isAdmin() {
+  return request.auth != null
+    && request.auth.token.email == "admin@ngochuy-quynhhuong.wedding"
+    && request.auth.token.email_verified == true;
+}
+
+function isOwner(uid) {
+  return request.auth != null && request.auth.uid == uid;
+}
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // RSVP — mỗi khách chỉ có đúng 1 document, id = uid ẩn danh của họ.
+    // - Đọc: chỉ admin (chứa SĐT/họ tên khách, không công khai).
+    // - Tạo/sửa: chỉ chính khách đó (uid khớp id document) và bắt buộc
+    //   phải tự gắn đúng ownerUid = uid của mình (chống giả mạo hộ người khác).
+    // - Xoá: chỉ admin.
+    match /rsvps/{rsvpId} {
+      allow read: if isAdmin();
+      allow create: if isOwner(rsvpId) && request.resource.data.ownerUid == rsvpId;
+      allow update: if isOwner(rsvpId) && request.resource.data.ownerUid == rsvpId;
+      allow delete: if isAdmin();
+    }
+
+    // Lời chúc — công khai cho mọi người xem (đúng mục đích của trang).
+    // - Tạo: ai đã đăng nhập (kể cả ẩn danh) đều được, miễn tự gắn đúng ownerUid.
+    // - Sửa: chỉ chủ nhân lời chúc đó (theo ownerUid) hoặc admin.
+    // - Xoá: chỉ admin (kiểm duyệt nội dung không phù hợp).
+    match /wishes/{wishId} {
+      allow read: if true;
+      allow create: if request.auth != null
+                    && request.resource.data.ownerUid == request.auth.uid
+                    && request.resource.data.name is string
+                    && request.resource.data.message is string
+                    && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 60
+                    && request.resource.data.message.size() > 0 && request.resource.data.message.size() <= 1000;
+      allow update: if (resource.data.ownerUid == request.auth.uid || isAdmin())
+                    && request.resource.data.ownerUid == resource.data.ownerUid;
+      allow delete: if isAdmin();
+    }
+
+    // Mặc định: chặn tất cả những gì không khớp rule ở trên.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

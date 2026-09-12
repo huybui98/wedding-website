@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Thư mời cưới Ngọc Huy & Quỳnh Hương — 12.10.2026. Xem lịch cưới, chuyện tình, album ảnh, xác nhận tham dự và gửi lời chúc đến cô dâu chú rể.">
+<meta name="description" content="Thư mời cưới Ngọc Huy & Quỳnh Hương — 28.10.2026. Xem lịch cưới, chuyện tình, album ảnh, xác nhận tham dự và gửi lời chúc đến cô dâu chú rể.">
 <meta name="theme-color" content="#EDE3CC">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
 <title>Ngọc Huy & Quỳnh Hương — Hành trình yêu thương</title>
@@ -12,7 +12,7 @@
      Đổi og:image thành ảnh cưới đẹp nhất của hai bạn (nên là ảnh ngang, tỉ lệ ~1.91:1, ví dụ 1200x630px). -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ngọc Huy & Quỳnh Hương — Thư mời cưới">
-<meta property="og:description" content="12.10.2026 — Chúng mình chính thức nói lời trăm năm. Rất mong được đón tiếp bạn trong ngày vui!">
+<meta property="og:description" content="28.10.2026 — Chúng mình chính thức nói lời trăm năm. Rất mong được đón tiếp bạn trong ngày vui!">
 <meta property="og:image" content="https://ik.imagekit.io/tziiyziat/family.webp?tr=w-1200,h-630,fo-auto">
 <meta property="og:locale" content="vi_VN">
 <meta name="twitter:card" content="summary_large_image">
@@ -23,8 +23,10 @@
      2) Vào Project settings > General > "Your apps" > Web app → copy config, dán vào firebaseConfig dưới đây
      3) Vào Authentication > Sign-in method > bật "Email/Password", tạo 1 tài khoản cho cô dâu/chú rể
      4) Vào Firestore Database > Create database (chọn mode "Production"), sau đó dán Security Rules
-        có sẵn trong file README-FIREBASE.md (mình xuất kèm file này) vào tab "Rules"
-     5) Đổi ADMIN_EMAIL dưới đây đúng bằng email tài khoản admin đã tạo ở bước 3
+        có sẵn trong file firestore.rules (xuất kèm file này) vào tab "Rules" — BẮT BUỘC, nếu không dán
+        đúng rules này thì bất kỳ ai mở DevTools cũng có thể đọc/ghi thẳng vào dữ liệu khách mời của bạn.
+     5) Đổi ADMIN_EMAIL dưới đây đúng bằng email tài khoản admin đã tạo ở bước 3 (phải khớp 100% với
+        email dùng trong firestore.rules)
      ========================================================= -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -47,7 +49,7 @@
     appId: "1:888589686455:web:d4dc4fea53256da9ae9f32"
   };
   // Email của tài khoản admin (cô dâu/chú rể) đã tạo trong Firebase Authentication.
-  // Phải khớp với ADMIN_EMAIL dùng trong Firestore Security Rules.
+  // Phải khớp với ADMIN_EMAIL dùng trong Firestore Security Rules (xem firestore.rules).
   window.ADMIN_EMAIL = "admin@ngochuy-quynhhuong.wedding";
 
   let firebaseReady = false;
@@ -99,6 +101,12 @@
 button, a, .chip, .cd-item, .g-item{-webkit-tap-highlight-color:transparent;}
 .btn:active, .chip:active, .game-opt:active, .player-btn:active, .music-toggle-fab:active{transform:scale(.96);}
 html{scroll-behavior:smooth;}
+html{
+   scroll-behavior:smooth;
+   scrollbar-color: rgba(139,58,58,.52) rgba(237,227,204,.9);
+   scrollbar-width: thin;
+   scrollbar-gutter: stable;
+}
 body{
   margin:0;
   background:var(--ivory);
@@ -108,12 +116,29 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
+::-webkit-scrollbar{width:10px;height:10px;transition:width .25s ease, background .2s ease;}
+::-webkit-scrollbar-track{background:rgba(237,227,204,.9);}
+::-webkit-scrollbar-thumb{
+   background:linear-gradient(180deg, rgba(139,58,58,.9), rgba(139,111,71,.82));
+   border-radius:999px;border:2px solid rgba(237,227,204,.8);transition:background .2s ease, border-color .2s ease, transform .2s ease;
+}
+html:hover::-webkit-scrollbar,
+body:hover::-webkit-scrollbar{width:14px;height:14px;}
+::-webkit-scrollbar-thumb:hover,
+html:hover::-webkit-scrollbar-thumb,
+body:hover::-webkit-scrollbar-thumb{background:linear-gradient(180deg, rgba(139,58,58,1), rgba(139,111,71,.94));border-color:rgba(237,227,204,.95);}
 h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;margin:0;color:var(--wine-deep);}
 p{line-height:1.7;color:var(--ink-soft);}
 a{color:inherit;text-decoration:none;}
 button{font-family:var(--font-body);cursor:pointer;border:none;}
 img{max-width:100%;display:block;}
 .container{max-width:1120px;margin:0 auto;padding:0 24px;}
+@media(max-width:640px){
+  .container{padding:0 18px;}
+  .section{padding:62px 0;}
+  .section-sub{margin-bottom:20px;}
+  .form-card, .game-card, .gift-card, .event-card{padding-left:20px !important; padding-right:20px !important;}
+}
 .eyebrow{
   font-family:var(--font-body);
   letter-spacing:.28em;
@@ -123,8 +148,8 @@ img{max-width:100%;display:block;}
   font-weight:500;
 }
 .section-title{font-size:clamp(30px,4vw,46px);margin:10px 0 14px;}
-.section-sub{max-width:560px;margin:0 auto 48px;text-align:center;font-size:16px;}
-.section{padding:110px 0;position:relative;scroll-margin-top:90px;}
+.section-sub{max-width:560px;margin:0 auto 28px;text-align:center;font-size:16px;}
+.section{padding:78px 0;position:relative;scroll-margin-top:90px;}
 .section.alt{background:var(--ivory-deep);}
 .center{text-align:center;}
 .btn{
@@ -240,6 +265,10 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .cd-num{font-family:var(--font-display);font-size:clamp(17px,6vw,32px);color:var(--wine-deep);font-weight:400;white-space:nowrap;}
 .cd-label{font-size:clamp(7.5px,2vw,10px);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;}
 .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:10px;}
+@media(max-width:560px){
+  .hero-actions{display:grid;grid-template-columns:1fr;gap:12px;max-width:340px;margin:18px auto 0;}
+  .hero-actions .btn{width:100%;justify-content:center;padding:14px 18px;letter-spacing:.08em;}
+}
 
 /* ===== timeline ===== */
 .timeline{position:relative;max-width:760px;margin:0 auto;}
@@ -287,6 +316,17 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .event-meta div{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(139,111,71,.35);}
 .event-meta b{color:var(--wine);min-width:96px;display:inline-block;font-weight:500;}
 .event-card .btn{margin-top:14px;}
+@media(max-width:760px){
+  .event-card{padding:30px 20px 24px;border:1.5px solid rgba(139,111,71,.35);background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(237,227,204,.35));}
+  .event-meta{margin:16px 0 12px;}
+  .event-meta div{display:block;gap:0;padding:12px 14px;border:1px solid rgba(139,111,71,.18);border-radius:5px;background:rgba(237,227,204,.26);margin-bottom:10px;}
+  .event-meta b{display:block;min-width:0;margin-bottom:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;}
+}
+@media(max-width:560px){
+  .event-meta div{display:block;gap:0;padding:10px 0;}
+  .event-meta b{display:block;min-width:0;margin-bottom:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;}
+  .event-card .btn{display:flex;width:100%;justify-content:center;padding:14px 18px;letter-spacing:.08em;}
+}
 
 /* ===== calendar (paper style) ===== */
 .cal-wrap{max-width:520px;margin:0 auto;}
@@ -478,7 +518,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   background:
     repeating-linear-gradient(to bottom, transparent 0, transparent 33px, rgba(139,111,71,.09) 34px),
     var(--ivory);
-  animation:envelope-failsafe 0.01s linear 6s forwards;
+  animation:envelope-failsafe 0.01s linear 8s forwards;
 }
 .envelope-intro.hide{opacity:0;pointer-events:none;}
 @keyframes envelope-failsafe{to{opacity:0;pointer-events:none;visibility:hidden;}}
@@ -567,6 +607,7 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .form-state{text-align:center;padding:30px 10px;}
 .form-state .icon{font-size:44px;margin-bottom:14px;}
 .hidden{display:none !important;}
+.hp-field{position:absolute !important;left:-9999px !important;top:-9999px !important;width:1px !important;height:1px !important;overflow:hidden !important;}
 
 /* ===== wishes ===== */
 .wishes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:10px;}
@@ -731,12 +772,12 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
   <div class="hero-content">
     <div class="hero-eyebrow">— thư mời cưới —</div>
     <h1 class="hero-names"><span id="groom-name">Ngọc Huy</span><span class="hero-amp">&amp;</span><span id="bride-name">Quỳnh Hương</span></h1>
-    <div class="hero-date" id="hero-date">12 . 10 . 2026</div>
+    <div class="hero-date" id="hero-date">28 . 10 . 2026</div>
     <div class="countdown" id="countdown"></div>
     <div class="hero-actions">
-      <a href="#rsvp" class="btn btn-primary">Xác nhận tham dự</a>
-      <a href="#events" class="btn btn-outline">Xem địa điểm</a>
-      <button class="btn btn-outline" onclick="addToCalendar()">+ Thêm vào lịch</button>
+      <a href="#rsvp" class="btn btn-primary">Xác nhận dự tiệc</a>
+      <a href="#events" class="btn btn-outline">Địa điểm lễ cưới</a>
+      <button class="btn btn-outline" onclick="addToCalendar()">+ Lưu vào lịch</button>
     </div>
   </div>
 </header>
@@ -747,7 +788,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
     <div class="center reveal">
       <div class="eyebrow">Save the date</div>
       <h2 class="section-title">Lịch cưới</h2>
-      <p class="section-sub">Một ngày duy nhất trong hàng ngàn ngày — xin hãy giữ lại cho nhau, dù bạn xem theo lịch dương hay lịch âm.</p>
+      <p class="section-sub">Ngày 28 tháng 10 năm 2026, là ngày hạnh phúc mà hai gia đình cùng chung vui, lưu giữ một khoảnh khắc đẹp đẽ, đầy yêu thương.</p>
     </div>
     <div class="cal-wrap reveal">
       <div class="cal-countdown">
@@ -758,7 +799,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
         <div class="cal-month-title" id="cal-month-title">Tháng 10, 2026</div>
         <div class="cal-grid" id="cal-grid"></div>
         <div class="cal-caption">
-          <div id="cal-solar-line">12 Tháng 10, 2026 · Lễ Cưới · 17:00</div>
+          <div id="cal-solar-line">28 Tháng 10, 2026 · Lễ thành hôn · 09:00 - 11:00 (giờ Việt Nam)</div>
           <div id="cal-lunar-line" class="cal-lunar">Tức ngày ... (Âm lịch)</div>
         </div>
       </div>
@@ -784,7 +825,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
     <div class="center reveal">
       <div class="eyebrow">Wedding events</div>
       <h2 class="section-title">Lễ thành hôn</h2>
-      <p class="section-sub">Rất mong được đón tiếp và chia vui cùng gia đình, người thân và bạn bè tại hai buổi lễ.</p>
+      <p class="section-sub">Rất mong được gặp mặt, cùng chia vui và lưu giữ một ngày trọng đại của hai gia đình.</p>
     </div>
     <div class="events-grid" id="events-grid"></div>
   </div>
@@ -855,6 +896,10 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
     </div>
     <div class="form-card reveal" id="rsvp-card">
       <form id="rsvp-form">
+        <div class="field hp-field" aria-hidden="true">
+          <label for="rsvp-company">Company</label>
+          <input type="text" id="rsvp-company" name="company" tabindex="-1" autocomplete="off">
+        </div>
         <div class="row-2">
           <div class="field" id="f-name">
             <label for="rsvp-fullname">Họ và tên *</label>
@@ -925,7 +970,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
       <div class="form-state hidden" id="rsvp-fail">
         <div class="icon">⚠️</div>
         <h3>Có lỗi xảy ra</h3>
-        <p>Không thể gửi phản hồi lúc này. Vui lòng thử lại sau ít phút.</p>
+        <p id="rsvp-fail-msg">Không thể gửi phản hồi lúc này. Vui lòng thử lại sau ít phút.</p>
         <button class="btn btn-outline" onclick="resetRsvpForm()" style="margin-top:14px;">Thử lại</button>
       </div>
     </div>
@@ -942,6 +987,10 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
     </div>
     <div class="form-card reveal" style="margin-bottom:44px;">
       <form id="wish-form">
+        <div class="field hp-field" aria-hidden="true">
+          <label for="wish-company">Company</label>
+          <input type="text" id="wish-company" name="company" tabindex="-1" autocomplete="off">
+        </div>
         <div class="field" id="f-wish-name">
           <label for="wish-name">Tên của bạn *</label>
           <input type="text" id="wish-name" placeholder="Tên bạn">
@@ -1081,7 +1130,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
 const weddingConfig = {
   groom: "Ngọc Huy",
   bride: "Quỳnh Hương",
-  weddingDate: "2026-10-12T17:00:00+07:00",
+  weddingDate: "2026-10-28T09:00:00+07:00",
   timeZone: 7,
   // Danh sách nhạc nền — thêm bao nhiêu bài tuỳ ý, khách sẽ next/back qua lại được.
   // (ví dụ Firebase Storage, hoặc để chung thư mục với file HTML này) → dán URL file đó vào "url".
@@ -1096,36 +1145,40 @@ const weddingConfig = {
   musicVolume: 0.35,
   timeline: [
     { date: "Tháng 12, 2025", title: "Lần đầu gặp nhau", desc: "Một buổi sáng mưa Hà Nội, hai đứa gặp nhau lần đầu ở sân cầu lông. Đâu ai nghĩ sẽ là định mệnh của nhau!.", img: "https://ik.imagekit.io/tziiyziat/first_meet.webp" },
-    { date: "Tháng 12, 2025", title: "Lần đầu hẹn hò", desc: "Buổi hẹn đầu tiên cùng ngắm pháo hoa vào đêm countdown 2025-2026, ngại ngùng nhưng chẳng ai muốn về sớm. Ngày anh bắt đầu quen với việc đi đâu cũng có em.", img: "https://ik.imagekit.io/tziiyziat/first_date.webp" },
+    { date: "Tháng 12, 2025", title: "Lần đầu hẹn hò", desc: "Buổi hẹn đầu tiên cùng ngắm pháo hoa vào đêm countdown, ngại ngùng nhưng chẳng ai muốn về sớm. Ngày anh bắt đầu quen với việc đi đâu cũng có em.", img: "https://ik.imagekit.io/tziiyziat/first_date.webp" },
     { date: "Tháng 08, 2026", title: "Cầu hôn", desc: "Dưới ánh đèn Hà Nội, một lời cầu hôn giản dị nhưng đủ khiến cả hai bật khóc. Đặt gạch dặm ngõ, gia đình đồng thuận.", img: "https://ik.imagekit.io/tziiyziat/propose.webp" },
-    { date: "12.10.2026", title: "Ngày cưới - Ngày hạnh phúc", desc: "Ngày chúng mình chính thức nói lời trăm năm, trước gia đình và những người thương yêu nhất.", img: "https://ik.imagekit.io/tziiyziat/family.webp" }
+    { date: "28.10.2026", title: "Ngày cưới - Ngày hạnh phúc", desc: "Ngày chúng mình chính thức nói lời trăm năm, trước gia đình và những người thương yêu nhất.", img: "https://ik.imagekit.io/tziiyziat/DSC04137.JPG" }
   ],
   events: [
     {
-      tag: "Nhà trai", title: "Lễ thành hôn — Nhà trai", time: "10:00 - 13:00, 12/10/2026",
-      address: "V2XX+39P, Đường 39, Thư Thị, Yên Mỹ, Hưng Yên", mapUrl: "https://maps.app.goo.gl/uJyWopBi8p98EJRDA",
-      dresscode: "Trang phục lịch sự tông nâu, trắng, vàng - kem - be", note: "Xe đón khách tại UBND thị trấn từ 9:15. Có bãi đỗ xe riêng."
+      tag: "Tiệc cưới", title: "Tiệc cưới — Nhà gái", time: "17:00, 21/10/2026",
+      address: "X3MR+J2, Bình Minh, Ninh Bình, Việt Nam", mapUrl: "https://maps.app.goo.gl/PykMeTLfxgdjAn419",
+      dresscode: "Trang phục lịch sự, tone trắng – be – kem", note: "Mời ăn tiệc cưới lúc 17:00 ngày 21/10/2026, tức hôm trước ngày vu quy, để cùng chia vui trong ngày cưới của hai vợ chồng mới."
     },
     {
-      tag: "Nhà gái", title: "Lễ thành hôn — Nhà gái", time: "17:00 - 20:00, 12/10/2026",
-      address: "X3MR+J2, Bình Minh, Ninh Bình, Việt Nam", mapUrl: "https://maps.app.goo.gl/PykMeTLfxgdjAn419",
-      dresscode: "Trang phục lịch sự tông nâu, trắng, vàng - kem - be", note: "Gửi xe tại sân nhà văn hoá cạnh nhà gái, có người hướng dẫn."
+      tag: "Lễ thành hôn", title: "Lễ thành hôn — Nhà trai", time: "09:00 - 11:00, 28/10/2026",
+      address: "V2XX+39P, Đường 39, Thư Thị, Yên Mỹ, Hưng Yên", mapUrl: "https://maps.app.goo.gl/uJyWopBi8p98EJRDA",
+      dresscode: "Trang phục lịch sự, tone trắng – be – kem", note: "Lễ thành hôn tổ chức từ 09:00 đến 11:00 ngày 28/10/2026. Xe đón khách tại tư gia nhà trai từ 9:15. Có bãi đỗ xe riêng."
     }
   ],
   gallery: [
-    "https://ik.imagekit.io/tziiyziat/date1.webp",
-    "https://ik.imagekit.io/tziiyziat/date2.webp",
-    "https://ik.imagekit.io/tziiyziat/date3.webp",
-    "https://ik.imagekit.io/tziiyziat/date5.webp",
-    "https://ik.imagekit.io/tziiyziat/date6.webp",
-    "https://ik.imagekit.io/tziiyziat/date7.webp",
-    "https://ik.imagekit.io/tziiyziat/date8.webp",
-    "https://ik.imagekit.io/tziiyziat/date9.webp",
-    "https://ik.imagekit.io/tziiyziat/date10.webp",
-    "https://ik.imagekit.io/tziiyziat/family.webp",
-    "https://ik.imagekit.io/tziiyziat/propose.webp",
     "https://ik.imagekit.io/tziiyziat/first_date.webp",
-    "https://ik.imagekit.io/tziiyziat/first_meet.webp"
+    "https://ik.imagekit.io/tziiyziat/date2.webp",
+    "https://ik.imagekit.io/tziiyziat/like3.jpg",
+    "https://ik.imagekit.io/tziiyziat/date6.webp",
+    "https://ik.imagekit.io/tziiyziat/like1.jpg",
+    "https://ik.imagekit.io/tziiyziat/DSC04132.JPG",
+    "https://ik.imagekit.io/tziiyziat/like4.jpg",
+    "https://ik.imagekit.io/tziiyziat/DSC03709.JPG",
+    "https://ik.imagekit.io/tziiyziat/date1.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC03256.JPG",
+    "https://ik.imagekit.io/tziiyziat/DSC04137.JPG",
+    "https://ik.imagekit.io/tziiyziat/DSC04301.JPG",
+    "https://ik.imagekit.io/tziiyziat/DSC04250.JPG",
+    "https://ik.imagekit.io/tziiyziat/DSC03307.JPG",
+    "https://ik.imagekit.io/tziiyziat/DSC04155.JPG",
+    "https://ik.imagekit.io/tziiyziat/DSC04258.JPG",
+    "https://ik.imagekit.io/tziiyziat/DSC04057.JPG",
   ],
   bank: { bankName: "TPBank (Tiên Phong Bank)", accountOwner: "Bùi Ngọc Huy", accountNumber: "0442 0335 001", qrImageUrl: "https://ik.imagekit.io/tziiyziat/Images/myQRTPbank.webp", giftEnabled: true },
   game: [
@@ -1144,9 +1197,10 @@ const weddingConfig = {
     { q: "Ai sẽ đi làm muộn nhiều hơn sau khi cưới?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "both", result: "Chắc là cả hai, vì ai cũng muốn nướng thêm chút nữa 🛏️" },
     { q: "Ai chụp ảnh xấu nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Ngọc Huy — 10 tấm thì 9 tấm mắt nhắm 📸" },
     { q: "Ai sẽ là người xin lỗi trước sau khi cãi nhau?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Ngọc Huy — không nhịn được lâu quá 2 giờ đồng hồ ☺️" },
-    { q: "Ai hay đổi ý lúc chọn menu cưới?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Quỳnh Hương — đổi món tới lần thứ 5 mới chốt 🍰" }
+    { q: "Ai hay đổi ý lúc chọn menu cưới?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Quỳnh Hương — đổi món tới lần thứ 5 mới chốt 🍰" },
+    { q: "Ai là người rủ chơi cầu lông hôm gặp nhau lần đầu?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "both", result: "Cả hai đều tự nhận là người rủ trước — đến giờ vẫn cãi nhau vụ này 🏸" }
   ],
-  // Đăng nhập admin dùng Firebase Authentication (Email/Password) — xem README-FIREBASE.md
+  // Đăng nhập admin dùng Firebase Authentication (Email/Password) — xem firestore.rules
 };
 
 /* =========================================================
@@ -1238,6 +1292,7 @@ const Lunar = (function(){
 let fbAuthReady = false;
 let anonUid = null; // uid ẩn danh ổn định của khách trên trình duyệt này — dùng để xác định "lời chúc của tôi"
 let isAdminSignedIn = false;
+let anonAuthPromise = null; // promise dùng chung để tránh gọi signInAnonymously nhiều lần song song
 
 function waitForFirebase(){
   return new Promise(resolve=>{
@@ -1257,10 +1312,25 @@ function waitForFirebase(){
   });
 }
 
+async function ensureAnonAuth(){
+  // Đảm bảo có anonUid trước khi cho phép gửi RSVP/lời chúc. Nếu lần đầu bị lỗi mạng,
+  // hàm này cho phép thử lại thay vì âm thầm rơi về một id ngẫu nhiên không gắn với ai.
+  await waitForFirebase();
+  if(!window.FB || !window.FB.ready) return null;
+  if(anonUid) return anonUid;
+  if(!anonAuthPromise){
+    const { auth, signInAnonymously } = window.FB;
+    anonAuthPromise = signInAnonymously(auth)
+      .then(cred=>{ anonUid = cred.user.uid; fbAuthReady = true; return anonUid; })
+      .catch(e=>{ console.error('Anonymous sign-in error', e); anonAuthPromise = null; return null; });
+  }
+  return anonAuthPromise;
+}
+
 async function initFirebaseAuth(){
   await waitForFirebase();
   if(!window.FB || !window.FB.ready){ fbAuthReady = false; enableSubmitButtons(); return; }
-  const { auth, signInAnonymously, onAuthStateChanged } = window.FB;
+  const { auth, onAuthStateChanged } = window.FB;
   onAuthStateChanged(auth, (user)=>{
     if(user && user.isAnonymous){
       anonUid = user.uid;
@@ -1271,17 +1341,11 @@ async function initFirebaseAuth(){
       isAdminSignedIn = false;
     }
   });
-  try{
-    await signInAnonymously(auth); // mỗi khách được cấp 1 danh tính ẩn danh, giữ nguyên qua các lần ghé lại
-    fbAuthReady = true;
-  }catch(e){
-    console.error('Anonymous sign-in error', e);
-    fbAuthReady = false;
-  }
+  await ensureAnonAuth();
   enableSubmitButtons();
 }
-// Chỉ mở khoá nút gửi RSVP/Lời chúc SAU KHI anonUid đã sẵn sàng — tránh trường hợp
-// khách bấm gửi cực nhanh trước khi có anonUid, khiến sau này nút "Sửa" không nhận ra đúng chủ nhân.
+// Mở khoá nút gửi RSVP/Lời chúc ngay khi đã biết trạng thái Firebase (dù thành công hay thất bại) —
+// nếu chưa có anonUid, lần bấm gửi sẽ tự thử xác thực lại (xem ensureAnonAuth trong submit handlers).
 function enableSubmitButtons(){
   const rsvpBtn = document.getElementById('rsvp-submit');
   if(rsvpBtn && rsvpBtn.disabled){ rsvpBtn.disabled = false; rsvpBtn.textContent = 'Gửi xác nhận'; }
@@ -1292,18 +1356,21 @@ function enableSubmitButtons(){
 const CloudService = {
   async addRsvp(data){
     if(!window.FB || !window.FB.ready) return { ok:false, reason:'not-configured' };
+    const ownerUid = await ensureAnonAuth();
+    if(!ownerUid) return { ok:false, reason:'auth-failed' };
     try{
       const { db, doc, setDoc, serverTimestamp } = window.FB;
-      const docId = anonUid || uid();
-      await setDoc(doc(db,'rsvps', docId), { ...data, ownerUid: docId, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }, { merge:true });
+      await setDoc(doc(db,'rsvps', ownerUid), { ...data, ownerUid, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }, { merge:true });
       return { ok:true };
     }catch(e){ console.error('addRsvp error', e); return { ok:false, reason:e.message }; }
   },
   async addWish(data){
     if(!window.FB || !window.FB.ready) return { ok:false, reason:'not-configured' };
+    const ownerUid = await ensureAnonAuth();
+    if(!ownerUid) return { ok:false, reason:'auth-failed' };
     try{
       const { db, collection, addDoc, serverTimestamp } = window.FB;
-      await addDoc(collection(db,'wishes'), { ...data, ownerUid: anonUid, createdAt: serverTimestamp() });
+      await addDoc(collection(db,'wishes'), { ...data, ownerUid, createdAt: serverTimestamp() });
       return { ok:true };
     }catch(e){ console.error('addWish error', e); return { ok:false, reason:e.message }; }
   },
@@ -1425,7 +1492,7 @@ function initReveal(){
 function shareInvite(){
   const shareData = {
     title: `Thư mời cưới ${weddingConfig.groom} & ${weddingConfig.bride}`,
-    text: `Ngọc Huy & Quỳnh Hương trân trọng mời bạn đến chung vui trong ngày cưới 12.10.2026!`,
+    text: `Mời bạn cùng đến chung vui trong ngày cưới của Ngọc Huy và Quỳnh Hương — 28.10.2026.`,
     url: location.href
   };
   if(navigator.share){
@@ -1826,6 +1893,9 @@ function toggleFieldError(id, isError){
 document.getElementById('rsvp-form').addEventListener('submit', async (e)=>{
   e.preventDefault();
   if(rsvpSubmitting) return;
+  // Honeypot chống bot: trường "company" bị ẩn khỏi mắt người dùng bằng CSS (không dùng display:none
+  // để bot đơn giản không bỏ qua được), người thật sẽ không bao giờ điền vào đây.
+  if(document.getElementById('rsvp-company').value.trim() !== ''){ return; }
   if(!validateRsvp()) return;
   rsvpSubmitting = true;
   const btn = document.getElementById('rsvp-submit');
@@ -1846,6 +1916,12 @@ document.getElementById('rsvp-form').addEventListener('submit', async (e)=>{
   if(result.ok){
     document.getElementById('rsvp-success').classList.remove('hidden');
   }else{
+    const msgEl = document.getElementById('rsvp-fail-msg');
+    if(msgEl){
+      msgEl.textContent = (result.reason === 'auth-failed')
+        ? 'Không thể xác thực kết nối — vui lòng kiểm tra mạng và thử lại.'
+        : 'Không thể gửi phản hồi lúc này. Vui lòng thử lại sau ít phút.';
+    }
     document.getElementById('rsvp-fail').classList.remove('hidden');
   }
   rsvpSubmitting = false;
@@ -1932,6 +2008,8 @@ function hideWishTooltip(){
 document.getElementById('wish-form').addEventListener('submit', async (e)=>{
   e.preventDefault();
   if(wishSubmitting) return;
+  // Honeypot chống bot (xem giải thích tương tự ở form RSVP).
+  if(document.getElementById('wish-company').value.trim() !== ''){ return; }
   const name = document.getElementById('wish-name').value.trim();
   const msg = document.getElementById('wish-message').value.trim();
   let valid = true;
@@ -1942,14 +2020,19 @@ document.getElementById('wish-form').addEventListener('submit', async (e)=>{
   const btn = document.getElementById('wish-submit-btn');
   btn.disabled = true;
 
+  let result;
   if(editingWishId){
-    await CloudService.updateWish(editingWishId, { name, message: msg });
+    result = await CloudService.updateWish(editingWishId, { name, message: msg });
     editingWishId = null;
     btn.textContent = 'Gửi lời chúc';
   }else{
-    await CloudService.addWish({ name, message: msg });
+    result = await CloudService.addWish({ name, message: msg });
   }
-  document.getElementById('wish-form').reset();
+  if(result && result.ok){
+    document.getElementById('wish-form').reset();
+  }else{
+    showToast('Không thể gửi lời chúc — vui lòng thử lại');
+  }
   btn.disabled = false;
   wishSubmitting = false;
 });
@@ -2087,14 +2170,12 @@ function answerGame(btnEl){
 }
 
 /* =========================================================
-   ADMIN DASHBOARD
-   ========================================================= */
-/* =========================================================
    ADMIN DASHBOARD — đăng nhập Firebase thật + dữ liệu realtime
    ========================================================= */
 let rsvpCache = [];
 let unsubscribeRsvps = null;
 let unsubscribeAdminWishes = null;
+let adminAuthListenerAttached = false; // đảm bảo chỉ đăng ký onAuthStateChanged một lần duy nhất
 
 function checkRoute(){
   if(location.hash === '#/admin'){
@@ -2114,6 +2195,8 @@ function exitAdmin(){ location.hash=''; }
 async function checkExistingAdminSession(){
   await waitForFirebase();
   if(!window.FB || !window.FB.ready) return;
+  if(adminAuthListenerAttached) return; // tránh đăng ký lại listener mỗi lần vào #/admin
+  adminAuthListenerAttached = true;
   const { auth, onAuthStateChanged } = window.FB;
   onAuthStateChanged(auth, (user)=>{
     if(user && !user.isAnonymous && user.email === window.ADMIN_EMAIL){
@@ -2277,6 +2360,11 @@ function initEnvelopeIntro(){
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduced || location.hash === '#/admin'){ overlay.remove(); return; }
 
+  // Cho phép mở bằng bàn phím (Enter/Space) để không chỉ phụ thuộc vào chuột/chạm.
+  overlay.setAttribute('role','button');
+  overlay.setAttribute('tabindex','0');
+  overlay.setAttribute('aria-label','Chạm hoặc nhấn Enter để mở thư mời');
+
   let opened = false;
   function openEnvelope(){
     if(opened) return;
@@ -2288,7 +2376,12 @@ function initEnvelopeIntro(){
     }, 950);
   }
   overlay.addEventListener('click', openEnvelope);
-  setTimeout(openEnvelope, 1100); // tự động mở dù người dùng không chạm vào
+  overlay.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openEnvelope(); }
+  });
+  // Chỉ tự mở sau một khoảng đủ dài để khách có cơ hội thật sự chạm vào phong thư;
+  // đây là lưới an toàn cho người không tương tác, không phải hành vi mặc định.
+  setTimeout(openEnvelope, 5000);
 }
 
 function safeRun(fn, label){
