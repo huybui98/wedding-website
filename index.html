@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Thư mời cưới Ngọc Huy & Quỳnh Hương — 28.10.2026. Xem lịch cưới, chuyện tình, album ảnh, xác nhận tham dự và gửi lời chúc đến cô dâu chú rể.">
+<meta name="description" content="Thư mời cưới Ngọc Huy & Quỳnh Hương — 28.10.2026. Xem lịch cưới, album ảnh, xác nhận tham dự và gửi lời chúc đến cô dâu chú rể.">
 <meta name="theme-color" content="#EDE3CC">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
-<title>Ngọc Huy & Quỳnh Hương — Hành trình yêu thương</title>
+<title>Ngọc Huy & Quỳnh Hương — Thiệp cưới</title>
 
 <!-- Open Graph — quyết định giao diện link preview khi dán vào Zalo/Facebook/Messenger.
      Đổi og:image thành ảnh cưới đẹp nhất của hai bạn (nên là ảnh ngang, tỉ lệ ~1.91:1, ví dụ 1200x630px). -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Ngọc Huy & Quỳnh Hương — Thư mời cưới">
 <meta property="og:description" content="28.10.2026 — Chúng mình chính thức nói lời trăm năm. Rất mong được đón tiếp bạn trong ngày vui!">
-<meta property="og:image" content="https://ik.imagekit.io/tziiyziat/DSC04137.JPG?tr=w-1200,h-630,fo-auto">
+<meta property="og:image" content="https://ik.imagekit.io/tziiyziat/DSC04301.webp?tr=w-1200,h-1400,fo-auto">
 <meta property="og:locale" content="vi_VN">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -165,17 +165,12 @@ img{max-width:100%;display:block;}
 .btn-outline{background:transparent;border:1.5px dashed var(--champagne);color:var(--wine-deep);}
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);}
 .reveal.in{opacity:1;transform:translateY(0);}
-.reveal-left{opacity:0;transform:translateX(-44px);transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);}
-.reveal-left.in{opacity:1;transform:translateX(0);}
-.reveal-right{opacity:0;transform:translateX(44px);transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);}
-.reveal-right.in{opacity:1;transform:translateX(0);}
 .reveal-zoom{opacity:0;transform:scale(.88);transition:opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);}
 .reveal-zoom.in{opacity:1;transform:scale(1);}
 .reveal-pop{animation:pop-in .45s cubic-bezier(.22,1,.36,1);}
 @keyframes pop-in{from{opacity:0;transform:translateY(8px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
 .masonry .g-item{transition:transform .3s cubic-bezier(.22,1,.36,1);}
-.masonry .g-item img{transition:transform .6s cubic-bezier(.22,1,.36,1), filter .5s ease;filter:sepia(.65) contrast(1.05) brightness(1.02);}
-.tl-item:nth-child(2n){transition-delay:.05s;}
+.masonry .g-item img{transition:transform .6s cubic-bezier(.22,1,.36,1);}
 .g-item:nth-child(3n+1){transition-delay:.04s;}
 .g-item:nth-child(3n+2){transition-delay:.1s;}
 .g-item:nth-child(3n+3){transition-delay:.16s;}
@@ -279,38 +274,6 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
   .cd-item{padding:12px 6px;max-width:74px;}
   .cd-num{font-size:clamp(18px,7vw,26px);}
   .cd-label{font-size:7px;letter-spacing:.06em;}
-}
-
-/* ===== timeline ===== */
-.timeline{position:relative;max-width:760px;margin:0 auto;}
-.timeline::before{
-  content:'';position:absolute;left:50%;top:0;bottom:0;width:0;
-  border-left:2px dashed var(--champagne);
-  transform:translateX(-50%);
-}
-.tl-item{position:relative;width:50%;padding:0 44px 70px;}
-.tl-item:nth-child(odd){left:0;text-align:right;}
-.tl-item:nth-child(even){left:50%;text-align:left;}
-.tl-dot{
-  position:absolute;top:2px;width:13px;height:13px;border-radius:50%;
-  background:var(--ivory);border:3px solid var(--wine);
-}
-.tl-item:nth-child(odd) .tl-dot{right:-7px;}
-.tl-item:nth-child(even) .tl-dot{left:-7px;}
-.tl-card{
-  background:var(--white);border-radius:var(--radius);padding:24px 26px;box-shadow:var(--shadow);
-  border:1px solid var(--champagne-soft);
-  display:inline-block;text-align:left;
-}
-.tl-card img{border-radius:4px;margin-bottom:14px;height:200px;width:100%;object-fit:cover;filter:sepia(.55) contrast(1.03);}
-.tl-date{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--champagne);font-weight:600;}
-.tl-card h3{font-size:22px;margin:6px 0 8px;}
-.tl-card p{font-size:14px;margin:0;}
-@media(max-width:720px){
-  .timeline::before{left:20px;}
-  .tl-item, .tl-item:nth-child(even){width:100%;left:0;text-align:left;padding:0 0 46px 52px;}
-  .tl-item:nth-child(odd){text-align:left;}
-  .tl-item:nth-child(odd) .tl-dot, .tl-item:nth-child(even) .tl-dot{left:13px;right:auto;}
 }
 
 /* ===== events ===== */
@@ -667,9 +630,9 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 /* Chống trình duyệt trong-app (Zalo/Messenger...) tự chèn link màu xanh gạch chân
    cho các cụm text trông giống số điện thoại/ngày tháng bên trong các khối này.
    Chỉ nhắm vào thẻ <a> thật sự bị chèn — không đụng tới màu chữ có chủ đích của các phần tử khác. */
-.btn a, .chip a, .tl-card a, .event-card a, .nav-links a,
+.btn a, .chip a, .event-card a, .nav-links a,
 .game-opt a, .wish-card a, .stat-card a, .player-wrap a, .cal-card a, .logo a, footer a,
-.btn a *, .chip a *, .tl-card a *, .event-card a *, .game-opt a *, .cal-card a *{
+.btn a *, .chip a *, .event-card a *, .game-opt a *, .cal-card a *{
   color:inherit !important;text-decoration:none !important;
 }
 .game-opt:disabled{opacity:.45;cursor:not-allowed;background:var(--ivory-deep);}
@@ -718,7 +681,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
 .admin-exit{position:fixed;top:16px;right:20px;z-index:950;background:var(--wine-deep);color:var(--ivory);padding:8px 16px;border-radius:3px;font-size:12px;}
 
 @media(prefers-reduced-motion: reduce){
-  .reveal, .reveal-left, .reveal-right, .reveal-zoom{transition:none;opacity:1;transform:none;}
+  .reveal, .reveal-zoom{transition:none;opacity:1;transform:none;}
   html{scroll-behavior:auto;}
   .envelope-intro{display:none;}
   .cal-grid .cal-day.today .heart-bg{animation:none;transform:translate(-50%,-50%);}
@@ -732,7 +695,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
   .player-btn:hover{background:var(--ivory-deep);transform:translateY(-1px);}
   .player-btn.main:hover{background:var(--wine-deep);transform:translateY(-2px) scale(1.03);}
   .music-toggle-fab:hover{transform:scale(1.06);}
-  .masonry .g-item:hover img{transform:scale(1.06);filter:sepia(0) contrast(1) brightness(1);}
+  .masonry .g-item:hover img{transform:scale(1.06);}
   .chip:hover{border-color:var(--champagne);background:var(--champagne-soft);transform:translateY(-2px);box-shadow:0 4px 10px rgba(139,111,71,.25);}
   .chip.active:hover{background:var(--wine);border-color:var(--wine);transform:translateY(-2px);box-shadow:0 4px 10px rgba(139,58,58,.3);}
   .game-opt:hover{background:var(--champagne-soft);}
@@ -772,7 +735,6 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
   <div class="nav-backdrop" id="nav-backdrop"></div>
   <div class="nav-links" id="nav-links">
     <button class="nav-close" id="nav-close" aria-label="Đóng menu">✕</button>
-    <a href="#story" onclick="closeNav()">Chuyện tình</a>
     <a href="#events" onclick="closeNav()">Sự kiện</a>
     <a href="#gallery" onclick="closeNav()">Album</a>
     <a href="#rsvp" onclick="closeNav()">RSVP</a>
@@ -817,23 +779,11 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
         <div class="cal-month-title" id="cal-month-title">Tháng 10, 2026</div>
         <div class="cal-grid" id="cal-grid"></div>
         <div class="cal-caption">
-          <div id="cal-solar-line">28 Tháng 10, 2026 · Lễ thành hôn · 09:00 - 11:00 (giờ Việt Nam)</div>
+          <div id="cal-solar-line">28 Tháng 10, 2026 · Lễ thành hôn · 11:00 - 13:00 (giờ Việt Nam)</div>
           <div id="cal-lunar-line" class="cal-lunar">Tức ngày ... (Âm lịch)</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- LOVE STORY -->
-<section class="section" id="story">
-  <div class="container">
-    <div class="center reveal">
-      <div class="eyebrow">Love story</div>
-      <h2 class="section-title">Hành trình yêu thương</h2>
-      <p class="section-sub">Mỗi chặng đường là một mảnh ghép, được nối bằng một sợi chỉ hồng lặng lẽ — từ ngày đầu gặp gỡ đến ngày chúng mình nói lời trăm năm.</p>
-    </div>
-    <div class="timeline" id="timeline"></div>
   </div>
 </section>
 
@@ -855,7 +805,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
     <div class="center reveal">
       <div class="eyebrow">Gallery</div>
       <h2 class="section-title">Album cưới</h2>
-      <p class="section-sub">Một vài khoảnh khắc trên hành trình của chúng mình.</p>
+      <p class="section-sub">Một vài khoảnh khắc đáng nhớ của hai chúng mình.</p>
     </div>
     <div class="masonry" id="gallery-grid"></div>
   </div>
@@ -1064,7 +1014,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
 <footer>
   <div class="container">
     <h3>Ngọc Huy &amp; Quỳnh Hương</h3>
-    <p>Cảm ơn bạn đã dành thời gian ghé thăm hành trình yêu thương của chúng mình 💛</p>
+    <p>Cảm ơn bạn đã dành thời gian ghé thăm và chung vui cùng chúng mình 💛</p>
     <p>Made with love — 2026</p>
   </div>
 </footer>
@@ -1148,7 +1098,7 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
 const weddingConfig = {
   groom: "Ngọc Huy",
   bride: "Quỳnh Hương",
-  weddingDate: "2026-10-28T09:00:00+07:00",
+  weddingDate: "2026-10-28T11:00:00+07:00",
   timeZone: 7,
   // Danh sách nhạc nền — thêm bao nhiêu bài tuỳ ý, khách sẽ next/back qua lại được.
   // (ví dụ Firebase Storage, hoặc để chung thư mục với file HTML này) → dán URL file đó vào "url".
@@ -1161,42 +1111,29 @@ const weddingConfig = {
     { title: "Em Đồng Ý _ I Do", artist: "Đức Phúc x 911", url: "https://ik.imagekit.io/tziiyziat/Musics/Em%20%C4%90%E1%BB%93ng%20%C3%9D%20_%20I%20Do%20_%20-%20%C4%90%E1%BB%A9c%20Ph%C3%BAc%20x%20911%20_Lyrics%20Video_%20%C4%90i%E1%BB%81u%20anh%20%C6%B0%E1%BB%9Bc%20mu%E1%BB%91n%20b%C3%A2y%20gi%E1%BB%9D%20ngay%20%C4%91%C3%A2y%20r%E1%BB%93i.mp3" },
   ],
   musicVolume: 0.35,
-  timeline: [
-    { date: "Tháng 12, 2025", title: "Lần đầu gặp nhau", desc: "Một buổi sáng mưa Hà Nội, hai đứa gặp nhau lần đầu ở sân cầu lông. Đâu ai nghĩ sẽ là định mệnh của nhau!.", img: "https://ik.imagekit.io/tziiyziat/first_meet.webp" },
-    { date: "Tháng 12, 2025", title: "Lần đầu hẹn hò", desc: "Buổi hẹn đầu tiên cùng ngắm pháo hoa vào đêm countdown, ngại ngùng nhưng chẳng ai muốn về sớm. Ngày anh bắt đầu quen với việc đi đâu cũng có em.", img: "https://ik.imagekit.io/tziiyziat/first_date.webp" },
-    { date: "Tháng 08, 2026", title: "Cầu hôn", desc: "Dưới ánh đèn Hà Nội, một lời cầu hôn giản dị nhưng đủ khiến cả hai bật khóc. Đặt gạch dặm ngõ, gia đình đồng thuận.", img: "https://ik.imagekit.io/tziiyziat/like4.jpg" },
-    { date: "28.10.2026", title: "Ngày cưới - Ngày hạnh phúc", desc: "Ngày chúng mình chính thức nói lời trăm năm, trước gia đình và những người thương yêu nhất.", img: "https://ik.imagekit.io/tziiyziat/DSC04137.JPG" }
-  ],
   events: [
     {
       tag: "Tiệc cưới", title: "Tiệc cưới — Nhà gái", time: "17:00, 21/10/2026",
-      address: "X3MR+J2, Bình Minh, Ninh Bình, Việt Nam", mapUrl: "https://maps.app.goo.gl/PykMeTLfxgdjAn419",
-      dresscode: "Trang phục lịch sự, tone trắng – be – kem", note: "Mời ăn tiệc cưới lúc 17:00 ngày 21/10/2026, tức hôm trước ngày vu quy, để cùng chia vui trong ngày cưới của hai vợ chồng mới."
+      address: "Nhà ông bà Nam Yến, X3MR+J2, Bình Minh, Ninh Bình, Việt Nam", mapUrl: "https://maps.app.goo.gl/PykMeTLfxgdjAn419",
+      dresscode: "Trang phục lịch sự, tone trắng – be – kem", note: "Mời bạn đến dự tiệc cưới lúc 17:00 tối ngày 21/10/2026 để cùng chung vui với gia đình nhà gái."
     },
     {
-      tag: "Lễ thành hôn", title: "Lễ thành hôn — Nhà trai", time: "09:00 - 11:00, 28/10/2026",
-      address: "V2XX+39P, Đường 39, Thư Thị, Yên Mỹ, Hưng Yên", mapUrl: "https://maps.app.goo.gl/uJyWopBi8p98EJRDA",
-      dresscode: "Trang phục lịch sự, tone trắng – be – kem", note: "Lễ thành hôn tổ chức từ 09:00 đến 11:00 ngày 28/10/2026. Xe đón khách tại tư gia nhà trai từ 9:15. Có bãi đỗ xe riêng."
+      tag: "Lễ thành hôn", title: "Lễ thành hôn — Nhà trai", time: "11:00 - 13:00, 28/10/2026",
+      address: "Xưởng Tiện Đại Phú Gia Công Cơ Khí, V2XX+39P, Đường 39, Thư Thị, Yên Mỹ, Hưng Yên", mapUrl: "https://maps.app.goo.gl/uJyWopBi8p98EJRDA",
+      dresscode: "Trang phục lịch sự, tone trắng – be – kem", note: "Lễ thành hôn tổ chức từ 11:00 đến 13:00 ngày 28/10/2026. Xe đón khách tại tư gia nhà trai từ 9:15. Có bãi đỗ xe riêng."
     }
   ],
   gallery: [
-    "https://ik.imagekit.io/tziiyziat/first_date.webp",
-    "https://ik.imagekit.io/tziiyziat/date2.webp",
-    "https://ik.imagekit.io/tziiyziat/like3.jpg",
-    "https://ik.imagekit.io/tziiyziat/date6.webp",
-    "https://ik.imagekit.io/tziiyziat/like1.jpg",
-    "https://ik.imagekit.io/tziiyziat/DSC04132.JPG",
-    "https://ik.imagekit.io/tziiyziat/like4.jpg",
-    "https://ik.imagekit.io/tziiyziat/DSC03709.JPG",
-    "https://ik.imagekit.io/tziiyziat/date1.webp",
-    "https://ik.imagekit.io/tziiyziat/DSC03256.JPG",
-    "https://ik.imagekit.io/tziiyziat/DSC04137.JPG",
-    "https://ik.imagekit.io/tziiyziat/DSC04301.JPG",
-    "https://ik.imagekit.io/tziiyziat/DSC04250.JPG",
-    "https://ik.imagekit.io/tziiyziat/DSC03307.JPG",
-    "https://ik.imagekit.io/tziiyziat/DSC04155.JPG",
-    "https://ik.imagekit.io/tziiyziat/DSC04258.JPG",
-    "https://ik.imagekit.io/tziiyziat/DSC04057.JPG",
+    "https://ik.imagekit.io/tziiyziat/DSC03307.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC03709.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC03256.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC04137.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC04210.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC04301.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC04132.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC04474.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC04327.webp",
+    "https://ik.imagekit.io/tziiyziat/DSC04602.webp",
   ],
   bank: { bankName: "TPBank (Tiên Phong Bank)", accountOwner: "Bùi Ngọc Huy", accountNumber: "0442 0335 001", qrImageUrl: "https://ik.imagekit.io/tziiyziat/Images/myQRTPbank.webp", giftEnabled: true },
   game: [
@@ -1507,7 +1444,7 @@ function initReveal(){
   const io = new IntersectionObserver(entries=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold:.12 });
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-zoom').forEach(el=>io.observe(el));
+  document.querySelectorAll('.reveal, .reveal-zoom').forEach(el=>io.observe(el));
 }
 
 /* =========================================================
@@ -1786,24 +1723,6 @@ function toggleRepeat(){
 }
 
 /* =========================================================
-   TIMELINE
-   ========================================================= */
-function initTimeline(){
-  const el = document.getElementById('timeline');
-  el.innerHTML = weddingConfig.timeline.map((item,i)=>`
-    <div class="tl-item ${i%2===0?'reveal-left':'reveal-right'}">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <img src="${ikResize(item.img,700)}" width="700" height="200" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async">
-        <div class="tl-date">${escapeHtml(item.date)}</div>
-        <h3>${escapeHtml(item.title)}</h3>
-        <p>${escapeHtml(item.desc)}</p>
-      </div>
-    </div>
-  `).join('');
-}
-
-/* =========================================================
    EVENTS
    ========================================================= */
 function initEvents(){
@@ -1836,7 +1755,7 @@ function initGallery(){
   galleryImgs = weddingConfig.gallery;
   const el = document.getElementById('gallery-grid');
   el.innerHTML = galleryImgs.map((src,i)=>{
-    const isTall = i % 5 === 0 && src !== 'https://ik.imagekit.io/tziiyziat/DSC04258.JPG';
+    const isTall = i % 5 === 0;
     return `
       <div class="g-item reveal-zoom ${isTall ? 'tall' : ''}" onclick="openLightbox(${i})">
         <img src="${ikResize(src,500)}" width="500" height="500" alt="Ảnh cưới ${i+1}" loading="lazy" decoding="async">
@@ -2423,7 +2342,6 @@ function init(){
   safeRun(initHero, 'initHero');
   safeRun(initCalendar, 'initCalendar');
   safeRun(initMusic, 'initMusic');
-  safeRun(initTimeline, 'initTimeline');
   safeRun(initEvents, 'initEvents');
   safeRun(initGallery, 'initGallery');
   safeRun(initChips, 'initChips');
