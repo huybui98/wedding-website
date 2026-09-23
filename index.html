@@ -610,7 +610,10 @@ nav.scrolled{background:rgba(237,227,204,0.92);backdrop-filter:blur(8px);box-sha
 .empty-state .icon{font-size:38px;margin-bottom:10px;}
 
 /* ===== gift ===== */
-.gift-card{max-width:480px;margin:0 auto;background:var(--white);border-radius:6px;padding:40px;box-shadow:var(--shadow);text-align:center;}
+.gift-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;align-items:stretch;}
+.gift-card{background:var(--white);border-radius:6px;padding:40px;box-shadow:var(--shadow);text-align:center;display:flex;flex-direction:column;}
+.gift-card .acc-row{margin-top:auto;}
+@media(max-width:760px){.gift-grid{grid-template-columns:1fr;}}
 .qr-box{
   width:220px;height:220px;margin:20px auto;border-radius:5px;
   background:repeating-linear-gradient(45deg,#E6D8B8,#E6D8B8 6px,#fff 6px,#fff 12px);
@@ -984,16 +987,30 @@ table.rsvp-table th{background:var(--ivory-deep);color:var(--wine);font-weight:5
       <h2 class="section-title">Mừng cưới</h2>
       <p class="section-sub">Sự có mặt của bạn là niềm hạnh phúc lớn nhất. Nếu muốn gửi chút lòng thành, chúng mình xin trân trọng đón nhận.</p>
     </div>
-    <div class="gift-card reveal">
-      <h3 id="gift-bank-name">TPBank (Tiên Phong Bank)</h3>
-      <div class="qr-box" id="qr-box" onclick="openQrModal()">
-        <img id="qr-image" class="hidden" alt="Mã QR chuyển khoản">
-        <span id="qr-placeholder">VietQR</span>
+    <div class="gift-grid">
+      <div class="gift-card reveal">
+        <h3 id="gift-bank-name-0">TPBank (Tiên Phong Bank)</h3>
+        <div class="qr-box" id="qr-box-0" onclick="openQrModal(0)">
+          <img id="qr-image-0" class="hidden" alt="Mã QR chuyển khoản nhà trai">
+          <span id="qr-placeholder-0">VietQR</span>
+        </div>
+        <p style="font-size:13px;">Chủ tài khoản: <b id="gift-owner-0" style="font-weight: bold;">Bùi Ngọc Huy</b></p>
+        <div class="acc-row">
+          <span id="gift-account-0">0442 0335 001</span>
+          <button onclick="copyAccount(0)">Sao chép</button>
+        </div>
       </div>
-      <p style="font-size:13px;">Chủ tài khoản: <b id="gift-owner" style="font-weight: bold;">Bùi Ngọc Huy</b></p>
-      <div class="acc-row">
-        <span id="gift-account">0442 0335 001</span>
-        <button onclick="copyAccount()">Sao chép</button>
+      <div class="gift-card reveal">
+        <h3 id="gift-bank-name-1">Tài khoản nhà gái</h3>
+        <div class="qr-box" id="qr-box-1" onclick="openQrModal(1)">
+          <img id="qr-image-1" class="hidden" alt="Mã QR chuyển khoản nhà gái">
+          <span id="qr-placeholder-1">Sẽ cập nhật QR</span>
+        </div>
+        <p style="font-size:13px;">Chủ tài khoản: <b id="gift-owner-1" style="font-weight: bold;">Sẽ cập nhật</b></p>
+        <div class="acc-row">
+          <span id="gift-account-1">Sẽ cập nhật số tài khoản</span>
+          <button onclick="copyAccount(1)">Sao chép</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1135,7 +1152,8 @@ const weddingConfig = {
     "https://ik.imagekit.io/tziiyziat/DSC04327.webp",
     "https://ik.imagekit.io/tziiyziat/DSC04602.webp",
   ],
-  bank: { bankName: "TPBank (Tiên Phong Bank)", accountOwner: "Bùi Ngọc Huy", accountNumber: "0442 0335 001", qrImageUrl: "https://ik.imagekit.io/tziiyziat/Images/myQRTPbank.webp", giftEnabled: true },
+  bank: { bankName: "Tài khoản nhà trai", accountOwner: "Bùi Ngọc Huy", accountNumber: "04420335001", qrImageUrl: "https://ik.imagekit.io/tziiyziat/Images/myQRTPbank.webp", giftEnabled: true },
+  brideBank: { bankName: "Tài khoản nhà gái", accountOwner: "Trần Thị Hương", accountNumber: "1241913954", qrImageUrl: "https://ik.imagekit.io/tziiyziat/Images/QR_Wife.png" },
   game: [
     { q: "Ai tỏ tình trước?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Ngọc Huy", result: "Là Ngọc Huy — tay run, giọng lạc cả tông! 😂" },
     { q: "Ai nói nhiều hơn?", options: ["Ngọc Huy","Quỳnh Hương"], answer: "Quỳnh Hương", result: "Chắc chắn là Quỳnh Hương, Ngọc Huy chỉ biết gật đầu 😅" },
@@ -1770,8 +1788,9 @@ function openLightbox(i){
   document.getElementById('lightbox').classList.remove('single');
   document.getElementById('lightbox').classList.add('open');
 }
-function openQrModal(){
-  const url = weddingConfig.bank.qrImageUrl;
+function openQrModal(accountIndex){
+  const account = accountIndex === 1 ? weddingConfig.brideBank : weddingConfig.bank;
+  const url = account.qrImageUrl;
   if(!url) return;
   document.getElementById('lightbox-img').src = url;
   document.getElementById('lightbox').classList.add('single');
@@ -2035,24 +2054,30 @@ function initGift(){
     document.getElementById('gift-section').style.display='none';
     return;
   }
-  document.getElementById('gift-bank-name').textContent = weddingConfig.bank.bankName;
-  document.getElementById('gift-owner').textContent = weddingConfig.bank.accountOwner;
-  document.getElementById('gift-account').textContent = weddingConfig.bank.accountNumber;
+  [weddingConfig.bank, weddingConfig.brideBank].forEach((account, index)=>{
+    document.getElementById(`gift-bank-name-${index}`).textContent = account.bankName || 'Thông tin tài khoản';
+    document.getElementById(`gift-owner-${index}`).textContent = account.accountOwner || 'Sẽ cập nhật';
+    document.getElementById(`gift-account-${index}`).textContent = account.accountNumber || 'Sẽ cập nhật số tài khoản';
 
-  const qrUrl = weddingConfig.bank.qrImageUrl;
-  const qrImg = document.getElementById('qr-image');
-  const qrPlaceholder = document.getElementById('qr-placeholder');
-  const qrBox = document.getElementById('qr-box');
-  if(qrUrl){
-    qrImg.src = qrUrl;
-    qrImg.classList.remove('hidden');
-    qrPlaceholder.classList.add('hidden');
-    qrBox.classList.add('has-image');
-  }
+    const qrImg = document.getElementById(`qr-image-${index}`);
+    const qrPlaceholder = document.getElementById(`qr-placeholder-${index}`);
+    const qrBox = document.getElementById(`qr-box-${index}`);
+    if(account.qrImageUrl){
+      qrImg.src = account.qrImageUrl;
+      qrImg.classList.remove('hidden');
+      qrPlaceholder.classList.add('hidden');
+      qrBox.classList.add('has-image');
+    }
+  });
 }
-function copyAccount(){
-  navigator.clipboard.writeText(weddingConfig.bank.accountNumber).then(()=>{
-    const btn = document.querySelector('.acc-row button');
+function copyAccount(accountIndex){
+  const account = accountIndex === 1 ? weddingConfig.brideBank : weddingConfig.bank;
+  if(!account.accountNumber){
+    showToast('Chưa có thông tin số tài khoản');
+    return;
+  }
+  navigator.clipboard.writeText(account.accountNumber).then(()=>{
+    const btn = document.querySelectorAll('.acc-row button')[accountIndex];
     const old = btn.textContent; btn.textContent='Đã chép!';
     setTimeout(()=>btn.textContent=old,1600);
     showToast('✓ Đã sao chép số tài khoản');
